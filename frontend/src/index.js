@@ -1,4 +1,9 @@
-import Home from "../components/Home.js";
+import Home from "./components/Home.js";
+import Dashboard from "./components/Dashboard.js";
+import Events from "./components/Events.js";
+import Schedule from "./components/Schedule.js";
+import Attendees from "./components/Attendees.js";
+import Communication from "./components/Communication.js";
 
 const pathToRegex = (path) =>
   new RegExp("^" + path.replace(/\//g, "\\/").replace(/:\w+/g, "(.+)") + "$");
@@ -27,6 +32,26 @@ const router = async () => {
     {
       path: "/",
       view: Home,
+    },
+    {
+      path: "/dashboard",
+      view: Dashboard,
+    },
+    {
+      path: "/events",
+      view: Events,
+    },
+    {
+      path: "/schedule",
+      view: Schedule,
+    },
+    {
+      path: "/attendees",
+      view: Attendees,
+    },
+    {
+      path: "/communication",
+      view: Communication,
     },
   ];
 

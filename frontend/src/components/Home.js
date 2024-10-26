@@ -20,7 +20,7 @@ export default class extends AbstractView {
             <div class="mb-md-5 mt-md-4 pb-2">
 
               <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
-              <p class="text-white-50 mb-5">Please enter your login and password!</p>
+              <p class="text-dark mb-5">Please enter your login and password!</p>
 
               <div data-mdb-input-init class="form-outline form-white mb-4">
                 <input type="email" id="typeEmailX" class="form-control form-control-lg" placeholder="email"/>
@@ -30,7 +30,7 @@ export default class extends AbstractView {
                 <input placeholder="password" type="password" id="typePasswordX" class="form-control form-control-lg" />
               </div>
 
-              <p class="small mb-3 pb-lg-2"><a class="text-white-50" href="#!">Forgot password?</a></p>
+              <p class="small mb-3 pb-lg-2"><a class="text-dark reset-password-link" href="#!">Forgot password?</a></p>
 
               <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
 
@@ -43,7 +43,7 @@ export default class extends AbstractView {
             </div>
 
             <div>
-              <p class="mb-0">Don't have an account? <a href="#!" class="text-white-50 fw-bold">Sign Up</a>
+              <p class="mb-0">Don't have an account? <a href="#!" class="sign-up-link text-dark fw-bold">Sign Up</a>
               </p>
             </div>
 
