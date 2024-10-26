@@ -1,0 +1,184 @@
+body {
+  min-height: 100vh;
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+main {
+  height: 100%;
+}
+
+.wrapper {
+  height: 100vh;
+}
+.main-wrapper {
+  height: 100%;
+  display: flex;
+  overflow: hidden;
+}
+
+.navbar {
+  background-color: #ff5733;
+}
+
+.navbar-brand {
+  padding-top: 0.75rem;
+  color: black !important;
+  padding-bottom: 0.75rem;
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.25);
+}
+
+.nav-item a {
+  color: black;
+}
+
+.nav-item a:hover {
+  color: #fff !important;
+}
+
+/*
+ * Sidebar
+ */
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  /* rtl:raw:
+  right: 0;
+  */
+  bottom: 0;
+  /* rtl:remove */
+  left: 0;
+  z-index: 100; /* Behind the navbar */
+  padding: 48px 0 0; /* Height of navbar */
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1);
+  background-color: #ff5733;
+}
+
+.sidebar .nav-link {
+  font-weight: 500;
+  color: black !important;
+}
+
+.sidebar .nav-link:hover {
+  color: #fff !important;
+}
+
+.sidebar .nav-link.active {
+  color: #fff !important;
+}
+
+@media (max-width: 767.98px) {
+  .sidebar {
+    top: 5rem;
+  }
+}
+
+.sidebar-sticky {
+  height: calc(100vh - 48px);
+  overflow-x: hidden;
+  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+}
+
+.sidebar-heading {
+  font-size: 0.75rem;
+}
+
+/*
+ * Navbar
+ */
+
+.navbar-brand:hover {
+  color: #fff !important;
+}
+
+.navbar .navbar-toggler {
+  top: 0.25rem;
+  right: 1rem;
+}
+
+.navbar .form-control {
+  padding: 0.75rem 1rem;
+}
+
+.form-control-dark {
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.form-control-dark:focus {
+  border-color: transparent;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25);
+}
+
+/* 
+* Components
+ */
+
+/* Customers */
+.btn-delete i {
+  color: red;
+}
+
+.btn-edit i {
+  color: #2470dc;
+}
+
+.btn-view i {
+  color: green;
+}
+
+.btn-edit i:hover,
+.btn-delete i:hover,
+.btn-view i:hover {
+  color: black;
+}
+
+/* Inventory */
+.table-wrapper {
+  max-height: 500px;
+  overflow-y: scroll;
+}
+
+.table thead {
+  position: sticky;
+  top: 0;
+}
+
+.crud-form input,
+.crud-form select {
+  width: 70%;
+}
+
+.menu-buttons {
+  width: 80%;
+}
+
+.menu-buttons .btn {
+  width: 11rem;
+}
+
+.form-check-input {
+  width: 1rem !important;
+}
+
+.btn-edit,
+.btn-delete,
+.btn-view {
+  text-decoration: none;
+}
+
+.btn-edit i,
+.btn-delete i,
+.btn-view i {
+  pointer-events: none;
+}
+
+.item-details {
+  list-style: none;
+}
+
+.login-card {
+  background-color: #151e33 !important;
+}
