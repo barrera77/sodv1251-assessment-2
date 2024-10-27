@@ -131,6 +131,29 @@ h5 {
   color: var(--white) !important;
 }
 
+.event-card {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+}
+
+.category-box {
+  border: 1px solid var(--orange);
+  border-radius: 5px;
+  padding: 0.25rem 1rem;
+  background-color: var(--orange);
+  color: var(--white);
+  text-decoration: none;
+}
+
+.event-media img {
+  width: 100%;
+  object-fit: fill;
+}
+
+.event-content {
+  box-sizing: border-box;
+}
+
 @media (max-width: 767.98px) {
   .sidebar {
     top: 5rem;
@@ -145,6 +168,44 @@ h5 {
 
 .sidebar-heading {
   font-size: 0.75rem;
+}
+
+/* events */
+.event-wrap {
+  background-color: var(--white) !important;
+}
+
+.list-group-item i {
+  font-size: 25px;
+  color: var(--orange);
+}
+
+.list-group-item a {
+  text-decoration: none;
+  border: 1px solid var(--orange);
+}
+
+.list-group-item svg,
+.list-group-item i {
+  margin-right: 1rem;
+}
+
+.calendar-links .list-group-item {
+  display: flex !important;
+  gap: 2rem;
+}
+
+.calendar-links .btn:hover {
+  background-color: var(--orange);
+  color: var(--white) !important;
+}
+
+.calendar-links .btn:hover * {
+  color: var(--white) !important;
+}
+
+.calendar-links .btn:hover svg {
+  fill: var(--white) !important;
 }
 
 /*
@@ -175,27 +236,18 @@ h5 {
   box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25);
 }
 
+.event-image img {
+  border-radius: 8px;
+}
+
 /* 
 * Components
  */
 
-/* Customers */
-.btn-delete i {
-  color: red;
-}
-
-.btn-edit i {
-  color: #2470dc;
-}
-
-.btn-view i {
-  color: green;
-}
-
-.btn-edit i:hover,
-.btn-delete i:hover,
-.btn-view i:hover {
-  color: black;
+.btn-edit:hover,
+.btn-delete:hover,
+.btn-view:hover {
+  color: black !important;
 }
 
 /* Inventory */

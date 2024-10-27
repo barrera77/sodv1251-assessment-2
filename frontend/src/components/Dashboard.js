@@ -10,7 +10,7 @@ export default class extends AbstractView {
     <section class="py-3">
         <div class="container bg-white p-3 upcoming-events">
             <div class="border-bottom border-secondary-subttle d-flex justify-content-between pb-3">
-                <h5><i class="bi bi-journal-bookmark"></i> Upcoming Events</h5>
+            <h5><i class="bi bi-journal-bookmark"></i> Upcoming Events</h5>
                 <button class="btn btn-dark btn-all-events">View all Events</button>
             </div>
             <div class="table-wrapper py-4">
