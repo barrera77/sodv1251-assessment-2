@@ -4,7 +4,7 @@ import { getAllEvents } from "../controllers/event-controller.js";
 const eventRouter = express.Router();
 const app = express();
 
-app.get("/", async (req, res) => {
+eventRouter.get("/", async (req, res) => {
   try {
     const events = await getAllEvents();
     res.json(events);

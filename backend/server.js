@@ -2,6 +2,7 @@ import express from "express";
 import path from "path";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+import eventRouter from "./routes/event-router.js";
 
 dotenv.config();
 
@@ -12,6 +13,11 @@ mongoose
   .connect(process.env.MONGODB_URI)
   .then(() => console.log("Connected Successfully to MongoDB Atlas"))
   .catch((error) => console.error("MongoDB connection error:", error));
+
+//middleware
+app.use(express.json());
+
+app.use("/events", eventRouter);
 
 // Serve static assets in production mode
 if (process.env.NODE_ENV === "production") {

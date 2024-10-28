@@ -9,7 +9,7 @@ export default class extends AbstractView {
   }
 
   async getHtml() {
-    //this.eventsList = this.fetchEvents();
+    this.eventsList = await this.fetchEvents();
 
     return `
     <section>
@@ -53,7 +53,7 @@ export default class extends AbstractView {
     `;
   }
 
-  /* async fetchEvents() {
+  async fetchEvents() {
     try {
       const events = await getData("/events");
       console.table(events);
@@ -61,5 +61,5 @@ export default class extends AbstractView {
     } catch (error) {
       console.error("Error fetching events:", error);
     }
-  } */
+  }
 }
