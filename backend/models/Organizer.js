@@ -1,15 +1,42 @@
-export default class Organizer {
-  constructor(id, name, address, city, email, phone, role, eventsOrganized) {
-    this.id = id;
-    this.address = address;
-    this.city = city;
-    this.email = email;
-    this.phone = phone;
-    this.role = role;
-    this.eventsOrganized = [];
-  }
+import mongoose from "mongoose";
 
-  addEvents(event) {
-    this.eventsOrganized.push(event);
-  }
-}
+const organizerSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  avatarOrLogo: {
+    type: String,
+    default: "https://avatar.iran.liara.run/public", // Default avatar or logo URL
+  },
+  address: {
+    type: String,
+    required: true,
+  },
+  city: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  phone: {
+    type: String,
+    required: true,
+  },
+  role: {
+    type: String,
+    required: true,
+  },
+  eventsOrganized: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: "Event",
+    default: [],
+  },
+});
+
+// Create and export the Organizer model
+const Organizer = mongoose.model("Organizer", organizerSchema);
+export default Organizer;

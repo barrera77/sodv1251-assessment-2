@@ -1,37 +1,59 @@
-export default class Event {
-  constructor(
-    id,
-    name,
-    description,
-    topicsCovered,
-    location,
-    startDate,
-    endDate,
-    delivery, // 'In-Person', 'Virtual', or 'Hybrid'
-    status = "pending", // 'Pending','Scheduled', 'Ongoing', 'Completed', 'Canceled'
-    maxCapacity,
-    category,
-    organizerId,
-    img_url = "https://placedog.net/500/380"
-  ) {
-    this.id = id;
-    this.name = name;
-    this.description = description;
-    this.topicsCovered = topicsCovered;
-    this.location = location;
-    this.startDate = startDate;
-    this.endDate = endDate;
-    this.delivary = delivery;
-    this.status = status;
-    this.maxCapacity = maxCapacity;
-    this.category = category;
-    this.organizerId = organizerId;
-    this.img_url = img_url;
-    this.attendees = [];
-    this.images = [];
-  }
+import mongoose from "mongoose";
 
-  addAttendee(attendee) {
-    this.attendees.push(attendee);
-  }
-}
+const eventSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+  topicsCovered: {
+    type: [String],
+    default: [], //Set default topics to an empty array
+  },
+  location: {
+    type: String,
+    required: true,
+  },
+  delivery: {
+    type: String,
+    enum: ["In-Person", "Virtual", "Hybrid"],
+    required: true,
+  },
+  status: {
+    type: String,
+    enum: ["Pending", "Scheduled", "Ongoing", "Completed", "Canceled"],
+    default: "Pending", //Set default status to "Pending"
+  },
+  maxCapacity: {
+    type: Number,
+    required: true,
+  },
+  category: {
+    type: String,
+    required: true,
+  },
+  organizerId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Organizer",
+    required: true,
+  },
+  img_url: {
+    type: String,
+    default: "https://placedog.net/500/380",
+  },
+  attendees: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: "Attendee",
+    default: [],
+  },
+  images: {
+    type: [String],
+    default: [],
+  },
+});
+
+const Event = mongoose.model("Event", eventSchema);
+export default Event;

@@ -1,10 +1,15 @@
-export default class Schedule {
-  constructor(id, eventId, title, description, startTime, endTime) {
-    this.id = id;
-    this.eventId = eventId;
-    this.title = title;
-    this.description = description;
-    this.startTime = startTime;
-    this.endTime = endTime;
-  }
-}
+const scheduleSchema = new mongoose.Schema({
+  eventId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Event",
+    required: true,
+  },
+  startDate: {
+    type: Date,
+    required: true,
+  },
+  startTime: {
+    type: String,
+    required: true,
+  },
+});

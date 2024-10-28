@@ -2,8 +2,14 @@ const express = require("express");
 const path = require("path");
 const dotenv = require("dotenv");
 const app = express();
+const mongoose = require("mongoose");
 
 dotenv.config();
+//connect to MongoDB Atlas
+mongoose.connect(process.dotenv.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 // Serve static assets in production mode
 if (process.env.NODE_ENV === "production") {

@@ -1,29 +1,48 @@
-export default class Attendee {
-  constructor(
-    id,
-    name,
-    avatar = "https://avatar.iran.liara.run/public",
-    address,
-    city,
-    email,
-    phone,
-    username,
-    password
-  ) {
-    this.id = id;
-    this.name = name;
-    this.avatar = avatar;
-    this.address = address;
-    this.city = city;
-    this.email = email;
-    this.phone = phone;
-    this.username = username;
-    this.password = password;
-    this.events = [];
-  }
+const mongoose = require("mongoose");
 
-  //Assign event to the attendee
-  addEvent(event) {
-    this.events.push(event);
-  }
-}
+const attendeeSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  avatar: {
+    type: String,
+    default: "https://avatar.iran.liara.run/public", //set default avatar to an online placeholder
+  },
+  address: {
+    type: String,
+    required: true,
+  },
+  city: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  phone: {
+    type: String,
+    required: true,
+  },
+  username: {
+    type: String,
+    required: false,
+  },
+  password: {
+    type: String,
+    required: false,
+  },
+  events: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Event",
+    },
+  ],
+  timestamps: true,
+});
+
+const Attendee = mongoose.model("Attendee", attendeeSchema);
+
+export default Attendee;
