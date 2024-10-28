@@ -1,12 +1,16 @@
 import AbstractView from "./AbstractView.js";
+import { getData } from "../utils/api-utility.js";
 
 export default class extends AbstractView {
   constructor(params) {
     super(params);
     this.setTitle("Events");
+    this.eventsList = [];
   }
 
   async getHtml() {
+    //this.eventsList = this.fetchEvents();
+
     return `
     <section>
       <div class="container bg-white p-3 events-list">
@@ -48,4 +52,14 @@ export default class extends AbstractView {
     </section>
     `;
   }
+
+  /* async fetchEvents() {
+    try {
+      const events = await getData("/events");
+      console.table(events);
+      return events;
+    } catch (error) {
+      console.error("Error fetching events:", error);
+    }
+  } */
 }
