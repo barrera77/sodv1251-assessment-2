@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const organizerSchema = new mongoose.Schema({
+const organizersSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -38,5 +38,5 @@ const organizerSchema = new mongoose.Schema({
 });
 
 // Create and export the Organizer model
-const Organizer = mongoose.model("Organizer", organizerSchema);
+const Organizer = mongoose.model("Organizer", organizersSchema, "organizers");
 export default Organizer;

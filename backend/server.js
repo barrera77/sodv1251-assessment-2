@@ -1,32 +1,35 @@
-const express = require("express");
-const path = require("path");
-const dotenv = require("dotenv");
-const app = express();
-const mongoose = require("mongoose");
+import express from "express";
+import path from "path";
+import dotenv from "dotenv";
+import mongoose from "mongoose";
 
 dotenv.config();
-//connect to MongoDB Atlas
-mongoose.connect(process.dotenv.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+
+const app = express();
+
+// Connect to MongoDB Atlas
+mongoose
+  .connect(process.env.MONGODB_URI)
+  .then(() => console.log("Connected Successfully to MongoDB Atlas"))
+  .catch((error) => console.error("MongoDB connection error:", error));
 
 // Serve static assets in production mode
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../frontend/public")));
-  app.use("/src", express.static(path.join(__dirname, "../frontend/src")));
+  app.use(express.static(path.join(process.cwd(), "frontend", "public")));
+  app.use("/src", express.static(path.join(process.cwd(), "frontend", "src")));
   app.use(
     "/components",
-    express.static(path.join(__dirname, "../frontend/src/components"))
+    express.static(path.join(process.cwd(), "frontend", "src", "components"))
   );
   app.get("*", (req, res) => {
     res.sendFile(
-      path.resolve(__dirname, "../frontend", "public", "index.html")
+      path.resolve(process.cwd(), "frontend", "public", "index.html")
     );
   });
 }
 
-//listen  on port 5000
-app.listen(process.env.PORT || 5000, () =>
-  console.log("Server running on http://localhost:5000")
+// Listen on port 5000
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () =>
+  console.log(`Server running on http://localhost:${PORT}`)
 );

@@ -35,25 +35,31 @@ const eventSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  organizerId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Organizer",
-    required: true,
-  },
+  organizerId: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Organizer",
+      required: true,
+    },
+  ],
   img_url: {
     type: String,
     default: "https://placedog.net/500/380",
+  },
+  preview: {
+    type: String,
+    default: "https://www.youtube.com/embed/2w4sRkTnhPM?si=58Is-mkbwQw5rtxW",
   },
   attendees: {
     type: [mongoose.Schema.Types.ObjectId],
     ref: "Attendee",
     default: [],
   },
-  images: {
+  imageGallery: {
     type: [String],
     default: [],
   },
 });
 
-const Event = mongoose.model("Event", eventSchema);
+const Event = mongoose.model("Event", eventSchema, "events");
 export default Event;
