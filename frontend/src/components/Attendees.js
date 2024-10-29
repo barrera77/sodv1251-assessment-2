@@ -39,11 +39,11 @@ export default class extends AbstractView {
                 <td>
                   <img class="attendee-avatar" src="${attendee.avatar}" alt="attendee-photo"/>
                 </td>
-                <td>${attendee.name}</td>
-                <td>${attendee.city}</td>
-                <td>${attendee.email}</td>
-                <td>${attendee.phone}</td>
-                <td class="px-0">
+                <td class="align-middle">${attendee.name}</td>
+                <td class="align-middle">${attendee.city}</td>
+                <td class="align-middle">${attendee.email}</td>
+                <td class="align-middle">${attendee.phone}</td>
+                <td class="px-0 align-middle">
                     <div>
                       <a href="/attendee-details?id=${attendee._id}"  data-link class="btn btn-primary" >Details <i class="bi bi-arrow-right"></i></a>
                     </div>

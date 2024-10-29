@@ -6,6 +6,7 @@ import Attendees from "./components/Attendees.js";
 import Communication from "./components/Communication.js";
 import EventDetails from "./components/EventDetails.js";
 import AttendeeDetails from "./components/AttendeeDetails.js";
+import EventAttendees from "./components/EventAttendees.js";
 
 const pathToRegex = (path) =>
   new RegExp("^" + path.replace(/\//g, "\\/").replace(/:\w+/g, "(.+)") + "$");
@@ -46,6 +47,10 @@ const router = async () => {
     {
       path: "/event-details",
       view: EventDetails,
+    },
+    {
+      path: "/event-attendees",
+      view: EventAttendees,
     },
     {
       path: "/schedule",

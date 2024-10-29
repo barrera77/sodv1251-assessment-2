@@ -72,9 +72,9 @@ const eventDetailsCard = (event, organizers) => `
         <div class="goto-attendees-list p-4 bg-white">
             <a
             class="btn btn-outline-primary m-auto w-75 d-flex align-items-center gap-3 justify-content-center"
-            href=""
+            href="/event-attendees?id=${event._id}" data-link
             ><i class="bi bi-person-video2 fs-5"></i>
-            <span>Attendees List</span></a
+            Attendees List</a
             >
         </div>
         <div class="add-calendar p-4 bg-white">
