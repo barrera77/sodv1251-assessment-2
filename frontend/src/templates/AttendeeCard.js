@@ -11,7 +11,7 @@ const attendeeCard = (attendee) => `
             <p class="text-center">${attendee.city}</p>
         </div>
         <div class="text-center">
-            <button class="btn btn-primary btn-contact">Contact</button>
+            <a href="communication" data-link class="btn btn-primary btn-contact">Contact</a>
         </div>
         
         </div>
