@@ -6,8 +6,9 @@ const eventPhotoGallery = (event) => `
               } - Photo Gallery</strong></h3>
               <div class="scroll-wrapper ">
                 <div class="event-photo-gallery row d-flex flex-nowrap py-4">
-                  ${event.imageGallery.map(
-                    (image) => `
+                  ${event.imageGallery
+                    .map(
+                      (image) => `
                     <div class="col-lg-4 col-sm-6 col-md-4">
                         <div class="gallery-card">
                             <div class="img-container w-100">
@@ -16,7 +17,8 @@ const eventPhotoGallery = (event) => `
                         </div>              
                     </div>  
                     `
-                  )}
+                    )
+                    .join("")}
                 </div>
               </div>
             </div>

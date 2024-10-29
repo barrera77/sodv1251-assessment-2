@@ -41,6 +41,8 @@ const attendeeSchema = new mongoose.Schema({
       default: [],
     },
   ],
+
+  //Add time stamp for registration
 });
 
 const Attendee = mongoose.model("Attendee", attendeeSchema);

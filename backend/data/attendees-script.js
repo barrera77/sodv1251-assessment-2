@@ -17,6 +17,13 @@ export async function runScript() {
         phone: "555-1234",
         username: "alicej",
         password: "password123",
+        events: [
+          "6720098d8dbb863702f63447",
+          "6720098d8dbb863702f63442",
+          "6720098d8dbb863702f6343e",
+          "6720098d8dbb863702f6343f",
+          "6720098d8dbb863702f63445",
+        ],
       },
       {
         name: "Bob Smith",
@@ -27,6 +34,11 @@ export async function runScript() {
         phone: "555-5678",
         username: "bobsmith",
         password: "password456",
+        events: [
+          "6720098d8dbb863702f63443",
+          "6720098d8dbb863702f6343e",
+          "6720098d8dbb863702f6343f",
+        ],
       },
       {
         name: "Charlie Brown",
@@ -37,6 +49,11 @@ export async function runScript() {
         phone: "555-8765",
         username: "charlieb",
         password: "password789",
+        events: [
+          "6720098d8dbb863702f63440",
+          "6720098d8dbb863702f63446",
+          "6720098d8dbb863702f63444",
+        ],
       },
       {
         name: "Diana Prince",
@@ -47,6 +64,12 @@ export async function runScript() {
         phone: "555-4321",
         username: "dianap",
         password: "password012",
+        events: [
+          "6720098d8dbb863702f6343f",
+          "6720098d8dbb863702f63441",
+          "6720098d8dbb863702f63445",
+          "6720098d8dbb863702f6343e",
+        ],
       },
       {
         name: "Ethan Hunt",
@@ -57,6 +80,11 @@ export async function runScript() {
         phone: "555-1357",
         username: "ethanh",
         password: "password345",
+        events: [
+          "6720098d8dbb863702f6343e",
+          "6720098d8dbb863702f63443",
+          "6720098d8dbb863702f63447",
+        ],
       },
       {
         name: "Fiona Gallagher",
@@ -67,6 +95,12 @@ export async function runScript() {
         phone: "403-987-6543",
         username: "fionag",
         password: "password678",
+        events: [
+          "6720098d8dbb863702f63443",
+          "6720098d8dbb863702f63441",
+          "6720098d8dbb863702f6343e",
+          "6720098d8dbb863702f63446",
+        ],
       },
       {
         name: "George Costanza",
@@ -77,6 +111,11 @@ export async function runScript() {
         phone: "403-234-5678",
         username: "georgec",
         password: "password901",
+        events: [
+          "6720098d8dbb863702f63442",
+          "6720098d8dbb863702f63444",
+          "6720098d8dbb863702f63440",
+        ],
       },
       {
         name: "Hannah Baker",
@@ -87,6 +126,12 @@ export async function runScript() {
         phone: "403-345-6789",
         username: "hannahb",
         password: "password234",
+        events: [
+          "6720098d8dbb863702f63446",
+          "6720098d8dbb863702f6343f",
+          "6720098d8dbb863702f63444",
+          "6720098d8dbb863702f63445",
+        ],
       },
       {
         name: "Ian Malcolm",
@@ -97,6 +142,11 @@ export async function runScript() {
         phone: "403-456-7890",
         username: "ianm",
         password: "password567",
+        events: [
+          "6720098d8dbb863702f63444",
+          "6720098d8dbb863702f63440",
+          "6720098d8dbb863702f63441",
+        ],
       },
       {
         name: "Jenna Marbles",
@@ -107,6 +157,12 @@ export async function runScript() {
         phone: "403-567-8901",
         username: "jennam",
         password: "password890",
+        events: [
+          "6720098d8dbb863702f63442",
+          "6720098d8dbb863702f6343e",
+          "6720098d8dbb863702f63447",
+          "6720098d8dbb863702f6343f",
+        ],
       },
       {
         name: "Albert Einstein",
@@ -117,6 +173,12 @@ export async function runScript() {
         phone: "403-111-2222",
         username: "alberte",
         password: "password123",
+        events: [
+          "6720098d8dbb863702f63441",
+          "6720098d8dbb863702f63446",
+          "6720098d8dbb863702f6343f",
+          "6720098d8dbb863702f63440",
+        ],
       },
       {
         name: "Marie Curie",
@@ -127,6 +189,12 @@ export async function runScript() {
         phone: "403-222-3333",
         username: "mariec",
         password: "password456",
+        events: [
+          "6720098d8dbb863702f63443",
+          "6720098d8dbb863702f6343e",
+          "6720098d8dbb863702f6343f",
+          "6720098d8dbb863702f63447",
+        ],
       },
       {
         name: "Isaac Newton",
@@ -137,6 +205,11 @@ export async function runScript() {
         phone: "403-333-4444",
         username: "isaacn",
         password: "password789",
+        events: [
+          "6720098d8dbb863702f63442",
+          "6720098d8dbb863702f6343f",
+          "6720098d8dbb863702f63445",
+        ],
       },
       {
         name: "Galileo Galilei",
@@ -147,6 +220,11 @@ export async function runScript() {
         phone: "403-444-5555",
         username: "galileog",
         password: "password012",
+        events: [
+          "6720098d8dbb863702f63447",
+          "6720098d8dbb863702f63444",
+          "6720098d8dbb863702f63440",
+        ],
       },
       {
         name: "Stephen Hawking",
@@ -157,6 +235,11 @@ export async function runScript() {
         phone: "403-555-6666",
         username: "stephenh",
         password: "password345",
+        events: [
+          "6720098d8dbb863702f63446",
+          "6720098d8dbb863702f63441",
+          "6720098d8dbb863702f63445",
+        ],
       },
       {
         name: "Freddie Mercury",
@@ -167,6 +250,11 @@ export async function runScript() {
         phone: "403-666-7777",
         username: "freddiem",
         password: "password456",
+        events: [
+          "6720098d8dbb863702f63442",
+          "6720098d8dbb863702f63443",
+          "6720098d8dbb863702f63440",
+        ],
       },
       {
         name: "Adele",
@@ -177,6 +265,12 @@ export async function runScript() {
         phone: "403-777-8888",
         username: "adelea",
         password: "password789",
+        events: [
+          "6720098d8dbb863702f6343e",
+          "6720098d8dbb863702f6343f",
+          "6720098d8dbb863702f63446",
+          "6720098d8dbb863702f63444",
+        ],
       },
       {
         name: "Elton John",
@@ -187,6 +281,11 @@ export async function runScript() {
         phone: "403-888-9999",
         username: "eltonj",
         password: "password012",
+        events: [
+          "6720098d8dbb863702f63441",
+          "6720098d8dbb863702f63446",
+          "6720098d8dbb863702f63445",
+        ],
       },
       {
         name: "Beyoncé",
@@ -197,6 +296,12 @@ export async function runScript() {
         phone: "403-999-0000",
         username: "beyonceb",
         password: "password345",
+        events: [
+          "6720098d8dbb863702f63443",
+          "6720098d8dbb863702f63447",
+          "6720098d8dbb863702f63440",
+          "6720098d8dbb863702f6343e",
+        ],
       },
       {
         name: "Taylor Swift",
@@ -207,6 +312,11 @@ export async function runScript() {
         phone: "403-000-1111",
         username: "taylors",
         password: "password678",
+        events: [
+          "6720098d8dbb863702f6343e",
+          "6720098d8dbb863702f63442",
+          "6720098d8dbb863702f6343f",
+        ],
       },
     ];
 
