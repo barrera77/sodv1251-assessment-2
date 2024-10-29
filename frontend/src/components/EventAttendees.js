@@ -26,15 +26,16 @@ export default class extends AbstractView {
       return attendee.events.includes(currentEvent._id);
     });
 
-    console.log(eventAttendeesList);
-
     return `
     <section class="py-3">
         <div class="container bg-white p-3">
-            <div class="border-bottom border-secondary-subttle">
-                <h5><i class="bi bi-calendar2-event"></i> ${
+            <div class="border-bottom border-secondary-subttle pb-3">
+                <h5 class="mb-3"><i class="bi bi-calendar2-event"></i> ${
                   currentEvent.name
                 } - Attendees</h5>
+                <button onclick="window.history.back()" data-link class="btn btn-outline-primary btn-back"
+            ><i class="bi bi-arrow-left"></i> Back to Event Details</button
+          >
             </div>
              <div class="table-wrapper pb-4 px-4">
           <table id="attendees" class="table table-striped table-sm">
@@ -105,5 +106,9 @@ export default class extends AbstractView {
     } catch (error) {
       console.error("Error fetching events:", error);
     }
+  }
+
+  goBackToPreviousPage() {
+    window.history.back();
   }
 }

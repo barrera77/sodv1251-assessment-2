@@ -73,7 +73,7 @@ export default class extends AbstractView {
   async fetchOrganizers() {
     try {
       const organizers = await getData(ORGANIZERS_END_POINT);
-      console.table(organizers);
+      //console.table(organizers);
       return organizers;
     } catch (error) {
       console.error("Error fetching organizers:", error);

@@ -2,55 +2,55 @@ const eventDetailsCard = (event, organizers) => `
 <div class="row w-100 m-auto">
     <div class="col-lg-7 p-3 event-col-one">
         <div class="event-wrap p-3">
-        <div class="event-header-wrap">
-            <h2 class="py-3 fw-bold">${event.name}</h2>
-        </div>
-        <div class="event-media">
-            <img
-            class="image-fluid"
-            src="${event.img_url}"
-            alt="event-media"
-            />
-            <div class="event-tags py-2">
-            <a href="" class="category-box">${event.category}</a>
+            <div class="event-header-wrap">
+                <h2 class="py-3 fw-bold">${event.name}</h2>
             </div>
-        </div>
+            <div class="event-media">
+                <img
+                class="image-fluid"
+                src="${event.img_url}"
+                alt="event-media"
+                />
+                <div class="event-tags py-2">
+                <a href="" class="category-box">${event.category}</a>
+                </div>
+            </div>
 
-        <div class="event-content py-5">
-            <h3
-            class="py-3 fw-bold border-bottom border-secondary-subttle"
-            >
-            Description
-            </h3>
-            <p>${event.description}</p>
-            <h3
-            class="py-3 fw-bold border-bottom border-secondary-subttle"
-            >
-            During this event the following will be covered:
-            </h3>
-            <ul>
-            ${event.topicsCovered
-              .map(
-                (topic) => `
-            <li>${topic}</li>
-            `
-              )
-              .join("")}
-            </ul>
-            <h3 class="py-3 fw-bold">Event Preview</h3>
-            <p>
-            <iframe
-                width="100%"
-                height="450"
-                src="${event.preview}"
-                title="YouTube video player"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerpolicy="strict-origin-when-cross-origin"
-                allowfullscreen
-            ></iframe>
-            </p>
-        </div>
+            <div class="event-content py-5">
+                <h3
+                class="py-3 fw-bold border-bottom border-secondary-subttle"
+                >
+                Description
+                </h3>
+                <p>${event.description}</p>
+                <h3
+                class="py-3 fw-bold border-bottom border-secondary-subttle"
+                >
+                During this event the following will be covered:
+                </h3>
+                <ul>
+                ${event.topicsCovered
+                  .map(
+                    (topic) => `
+                <li>${topic}</li>
+                `
+                  )
+                  .join("")}
+                </ul>
+                <h3 class="py-3 fw-bold">Event Preview</h3>
+                <p>
+                <iframe
+                    width="100%"
+                    height="450"
+                    src="${event.preview}"
+                    title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen
+                ></iframe>
+                </p>
+            </div>
         </div>
     </div>
     <div class="col-lg-5 py-3 event-col-two">
