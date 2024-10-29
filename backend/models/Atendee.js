@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const attendeeSchema = new mongoose.Schema({
   name: {
@@ -38,9 +38,9 @@ const attendeeSchema = new mongoose.Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Event",
+      default: [],
     },
   ],
-  timestamps: true,
 });
 
 const Attendee = mongoose.model("Attendee", attendeeSchema);

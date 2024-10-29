@@ -143,6 +143,7 @@ h5 {
   background-color: var(--orange);
   color: var(--white);
   text-decoration: none;
+  width: 6rem !important;
 }
 
 /* event details */
@@ -168,6 +169,12 @@ h5 {
   position: absolute;
   top: 2%;
   left: 2%;
+}
+
+/* Attendees */
+
+.attendee-avatar {
+  width: 50px;
 }
 
 @media (max-width: 767.98px) {

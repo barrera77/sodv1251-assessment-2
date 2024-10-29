@@ -4,7 +4,7 @@ import Event from "../models/Event.js";
 
 dotenv.config();
 
-// Seed function to insert organizers and events into the database
+// Seed function to insert events into the database
 export async function runScript() {
   try {
     const events = [

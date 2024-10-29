@@ -1,8 +1,16 @@
+console.log("Listeners on exit:", process.listeners("exit"));
+console.log(
+  "Listeners on uncaughtException:",
+  process.listeners("uncaughtException")
+);
+
 import express from "express";
 import path from "path";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import eventRouter from "./routes/event-router.js";
+import organizerRouter from "./routes/organizer-router.js";
+import attandeeRouter from "./routes/attendee-router.js";
 
 dotenv.config();
 
@@ -17,7 +25,10 @@ mongoose
 //middleware
 app.use(express.json());
 
-app.use("/events", eventRouter);
+//serve DB data
+app.use("/api/events", eventRouter);
+app.use("/api/organizers", organizerRouter);
+app.use("/api/attendees", attandeeRouter);
 
 // Serve static assets in production mode
 if (process.env.NODE_ENV === "production") {

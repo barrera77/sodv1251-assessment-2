@@ -57,7 +57,11 @@ const eventSchema = new mongoose.Schema({
   },
   imageGallery: {
     type: [String],
-    default: [],
+    default: [
+      "https://picsum.photos/200/130",
+      "https://picsum.photos/200/130",
+      "https://picsum.photos/200/130",
+    ],
   },
 });
 

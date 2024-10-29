@@ -1,5 +1,8 @@
 import AbstractView from "./AbstractView.js";
 import { getData } from "../utils/api-utility.js";
+import eventCard from "../templates/EventCard.js";
+
+const EVENTS_END_POINT = "/api/events";
 
 export default class extends AbstractView {
   constructor(params) {
@@ -11,6 +14,8 @@ export default class extends AbstractView {
   async getHtml() {
     this.eventsList = await this.fetchEvents();
 
+    const rows = this.eventsList.map((event) => eventCard(event)).join("");
+
     return `
     <section>
       <div class="container bg-white p-3 events-list">
@@ -19,44 +24,21 @@ export default class extends AbstractView {
           <a href="" class="btn btn-primary">+ New Event</a>
         </div>
         <div class="cards-wrapper py-4">
-          <div class="event-card row w-75 m-auto py-3 my-3">
-              <div class="col-4">
-                <div class="event-image px-2">
-                  <img src="https://placedog.net/500/380 " alt="event-image"></img>
-                </div>
-              </div>
-              <div class="col-8">
-                <div class="event-content">
-                  <h4 class="pb-3 fw-bold">Event Name</h4>
-                  <p>Description Influential media, entertainment & technology show inspirational speakers including game changing not just a large-scale conference, but a large educational hub on digital</p>
-                  <div class="pt-3 d-flex justify-content-between align-items-center">
-                    <div class="fs-5">
-                      <i class="bi bi-calendar-date"></i>
-                      <span> Date</span>
-                    </div>
-                    <div>
-                      <a href="" class="category-box">Category</a>
-                    </div>
-                    <div>
-                      <a href="/event-details" data-link class="btn btn-primary">Details <i class="bi bi-arrow-right"></i></a>
-                    </div>
-                  </div>
-                </div>
-              </div>   
-            </div>
-        </div>
-        <div>
-        
-        </div>
+        ${rows}
+        </div>       
       </div>
     </section>
     `;
   }
 
+  /**
+   * fetch the events from the server
+   * @returns events array
+   */
   async fetchEvents() {
     try {
-      const events = await getData("/events");
-      console.table(events);
+      const events = await getData(EVENTS_END_POINT);
+      //console.table(events);
       return events;
     } catch (error) {
       console.error("Error fetching events:", error);

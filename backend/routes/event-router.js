@@ -2,7 +2,6 @@ import express from "express";
 import { getAllEvents } from "../controllers/event-controller.js";
 
 const eventRouter = express.Router();
-const app = express();
 
 eventRouter.get("/", async (req, res) => {
   try {
