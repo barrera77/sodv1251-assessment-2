@@ -10,7 +10,9 @@ const communicationsEmailingForm = (attendees, organizers) => `
                     ${attendees
                       .map(
                         (attendee) => `
-                        <li><button onclick="this.insertEmail('${attendee.email}')" class="btn btn-contact">${attendee.name}</button></li>                       
+                        <li>
+                            <button data-email="${attendee.email}" class="btn btn-contact">${attendee.name}</button>
+                        </li>                       
                         `
                       )
                       .join("")}					
@@ -128,7 +130,9 @@ const communicationsEmailingForm = (attendees, organizers) => `
                 ${organizers
                   .map(
                     (organizer) => `
-                    <li>                    <button class="btn btn-contact" data-email="${organizer.email}">${organizer.name}</button></li>
+                    <li>
+                         <button class="text-start btn btn-contact" data-email="${organizer.email}">${organizer.name}</button>
+                    </li>
                     `
                   )
                   .join("")}

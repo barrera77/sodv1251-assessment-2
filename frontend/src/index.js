@@ -133,3 +133,26 @@ document.querySelectorAll(".nav-link").forEach((link) => {
     this.classList.add("active");
   });
 });
+
+/* email form logic */
+
+/* function insertEmail(email) {
+  const emailInput = document.getElementById("to");
+  if (emailInput) {
+    emailInput.value = email; // Insert the email into the input field
+  }
+  console.log("Email inserted into input:", email);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const appDiv = document.querySelector(".app");
+
+  // Attach a click event listener to the parent
+  appDiv.addEventListener("click", (event) => {
+    // Check if the clicked element is a button with the specified class
+    if (event.target.matches(".btn-contact")) {
+      const email = event.target.getAttribute("data-email");
+      insertEmail(email); // Call your insertEmail function
+    }
+  });
+}); */
