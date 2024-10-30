@@ -11,7 +11,7 @@ const communicationsEmailingForm = (attendees, organizers) => `
                       .map(
                         (attendee) => `
                         <li>
-                            <button data-email="${attendee.email}" class="btn btn-contact">${attendee.name}</button>
+                            <button data-email="${attendee.email}" class="btn btn-contact text-start">${attendee.name}</button>
                         </li>                       
                         `
                       )

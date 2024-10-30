@@ -73,9 +73,11 @@ export default class extends AbstractView {
   }
 
   insertEmail(email) {
-    const emailInput = document.getElementById("to");
-    if (emailInput) {
-      emailInput.value = email;
+    const mainEmailInput = document.getElementById("to");
+    const ccEmailInput = document.getElementById("cc");
+    const bccEmailInput = document.getElementById("bcc");
+    if (mainEmailInput) {
+      mainEmailInput.value = email;
     } else {
       console.error("Email input field not found.");
     }
