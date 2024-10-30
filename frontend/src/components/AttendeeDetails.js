@@ -25,17 +25,23 @@ export default class extends AbstractView {
       (attendee) => attendee._id === id
     );
 
+    const attendeEvents = [];
+    currentAttendee.events.forEach((event) => {
+      let element = this.eventsList.find((element) => element._id === event);
+      attendeEvents.push(element);
+    });
+
     return `
     <section>
         <div class="container p-3  event-details">    
             <div class="border-bottom border-secondary-subttle d-block pb-3">
               <h5 class="mb-3">Attendee Details</h5>
               <button onclick="window.history.back()" data-link class="btn btn-outline-primary"
-                ><i class="bi bi-arrow-left"></i> Back</
+                ><i class="bi bi-arrow-left-circle-fill"></i> Back</
               >
             </div>
             <div class="attendee-details-container py-3">
-              ${attendeeCard(currentAttendee)}
+              ${attendeeCard(currentAttendee, attendeEvents)}
                           
             </div>
         </div>

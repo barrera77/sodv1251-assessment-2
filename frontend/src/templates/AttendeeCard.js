@@ -1,4 +1,4 @@
-const attendeeCard = (attendee) => `
+const attendeeCard = (attendee, events) => `
 <div class="row w-100 m-auto">
     <div class="col-4 p-3 attendee-details-col-one">
         <div class="p-3 attendee-details-warap bg-white">
@@ -61,29 +61,38 @@ const attendeeCard = (attendee) => `
                         </div>
                     </li>
                 </ul>         
-           </div> 
-           <div class="bg-white">
-            <div class="table-wrapper pb-4">
+           </div>            
+        </div> 
+        <div class="bg-white mt-4 pb-4">
+            <div class="table-wrapper pt-4">
 
             <table id="attendees" class="table table-striped table-sm">
                 <thead>
-                <tr>
-                    <th></th>
-                    <th>NAME</th>
-                    <th>CITY</th>
-                    <th>EMAIL</th>
-                    <th>PHONE</th>
-                    <th>ACTIONS</th>
+                <tr>                  
+                    <th class="ps-3">EVENT</th>
+                    <th>DATE</th>
+                    <th>LOCATION</th>
                 </tr>
                 </thead>
-                <tbody></tbody>
+                <tbody>
+                    ${events
+                      .map(
+                        (event) => `
+                    <tr>
+                        <td class="ps-3">${event.name}</td>
+                        <td>Date</td>
+                        <td>${event.location}</td>
+                    </tr>                        
+                        `
+                      )
+                      .join("")}
+                </tbody>
             </table>
 
             
             </div>
 
-           </div>        
-        </div>                
+           </div>                       
     </div>              
     </div>
 `;

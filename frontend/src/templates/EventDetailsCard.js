@@ -58,15 +58,15 @@ const eventDetailsCard = (event, organizers) => `
         <div class="event-sidebar-header bg-white p-4">
             <ul class="d-flex flex-column gap-1 ps-0">
             <li class="list-group-item">
+                <i class="bi bi-geo-alt text-dark"></i>${event.location}</li>
+                 <hr />
+            <li class="list-group-item">
                 <strong>Date:</strong> January 3, 2025 - January 8, 2025
             </li>
             <hr />
             <li class="list-group-item">
                 <strong>Time:</strong> 12:00 pm - 8:00 pm (UTC)
-            </li>
-            <hr />
-            <li class="list-group-item">
-                <i class="bi bi-geo-alt text-dark"></i>${event.location}</li>
+            </li>   
             </ul>
         </div>
         <div class="goto-attendees-list p-4 bg-white">

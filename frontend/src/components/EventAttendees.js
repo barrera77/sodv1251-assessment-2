@@ -34,7 +34,7 @@ export default class extends AbstractView {
                   currentEvent.name
                 } - Attendees</h5>
                 <button onclick="window.history.back()" data-link class="btn btn-outline-primary btn-back"
-            ><i class="bi bi-arrow-left"></i> Back to Event Details</button
+            ><i class="bi bi-arrow-left-circle-fill"></i> Back to Event Details</button
           >
             </div>
              <div class="table-wrapper pb-4 px-4">
@@ -63,7 +63,7 @@ export default class extends AbstractView {
                 <td class="align-middle">${attendee.phone}</td>
                 <td class="px-0 align-middle">
                     <div>
-                      <a href="/attendee-details?id=${attendee._id}"  data-link class="btn btn-primary" >Details <i class="bi bi-arrow-right"></i></a>
+                      <a href="/attendee-details?id=${attendee._id}"  data-link class="btn btn-primary" >Details <i class="bi bi-arrow-right-circle-fill"></i></a>
                     </div>
                 </td>
               </tr> 

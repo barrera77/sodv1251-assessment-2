@@ -25,7 +25,7 @@ const eventCard = (event) => {
                     <a href="" class="category-box">${event.category}</a>
                 </div>  
                 <div>
-                    <a href="/event-details?id=${event._id}"  data-link class="btn btn-primary" >Details <i class="bi bi-arrow-right"></i></a>
+                    <a href="/event-details?id=${event._id}"  data-link class="btn btn-primary" >Details <i class="bi bi-arrow-right-circle-fill"></i></a>
                 </div>
             </div>
         </div>

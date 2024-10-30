@@ -36,7 +36,7 @@ export default class extends AbstractView {
         <div class="border-bottom border-secondary-subttle d-block pb-3">
           <h5 class="mb-3">Event Details</h5>
           <a href="/events" data-link class="btn btn-outline-primary"
-            ><i class="bi bi-arrow-left"></i> Back to Events Listing</a
+            ><i class="bi bi-arrow-left-circle-fill"></i> Back to Events Listing</a
           >
         </div>
         <div class="event-details-container py-3"> 
