@@ -53,22 +53,38 @@ app.post("/send-email", async (req, res) => {
 
   // Configure SMTP transporter
   const transporter = nodemailer.createTransport({
-    host: "smtp.sendgrid.net",
-    port: 465,
+    host: "smtp.gmail.com",
+    port: 587,
     secure: false,
     auth: {
-      user: "your-email@example.com",
-      pass: "your-password",
+      user: process.env.SENDER_USERNAME,
+      pass: process.env.SENDER_PASSWORD,
     },
   });
 
+  //configure mail options
   const mailOptions = {
-    from: "barrera_ml@hotmail.com",
+    from: {
+      name: "Event Management System",
+      address: process.env.SENDER_USERNAME,
+    },
     to: "alva_mn@hotmail.com",
     cc: cc || undefined,
     bcc: bcc || undefined,
     subject,
-    text: "This is a sample email message.", // Replace with actual message
+    text: "Event Confirmation.", // Replace with actual message
+    attachment: [
+      {
+        filename: "invitation.pdf",
+        path: path.join(__dirname, "invitation.pdf"),
+        contentType: "application/pdf",
+      },
+      {
+        filename: "sample.jpg",
+        path: path.join(__dirname, "sample.jpg"),
+        contentType: "image/jpg",
+      },
+    ],
   };
 
   try {
