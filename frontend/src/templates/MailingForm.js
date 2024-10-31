@@ -36,6 +36,13 @@ const communicationsEmailingForm = (attendees, organizers) => `
                         <label for="cc" class="col-2 col-sm-1 col-form-label fw-bold">CC:</label>
                         <div class="col-10 col-sm-11">
                             <input type="email" class="form-control" id="cc" placeholder="email(s)">
+                            <div
+                                id="invalid-email"
+                                class="invalid-feedback text-dark"
+                            >
+                                <i class="bi bi-exclamation-triangle"></i>
+                                <span id="message">Invalid Email</span>
+                            </div>
                         </div>
                     </div>
                     <div class="form-row mb-3">
@@ -44,7 +51,13 @@ const communicationsEmailingForm = (attendees, organizers) => `
                             <input type="email" class="form-control" id="bcc" placeholder="email(s)">
                         </div>
                     </div>
-                </form>
+                     <div class="form-row mb-3">
+                        <label for="subject" class="col-2 col-sm-1 col-form-label fw-bold">Subject:</label>
+                        <div class="col-10 col-sm-11">
+                            <input type="text" class="form-control" id="subject">
+                        </div>
+                    </div>
+                
                 <div class="row">
                     <div class="col-sm-11 ml-auto">
                         <div class="toolbar" role="toolbar">
@@ -118,6 +131,7 @@ const communicationsEmailingForm = (attendees, organizers) => `
                         </div>
                     </div>
                 </div>
+                </form>
             </div>
       </div>
 <div class="col-md-3 py-4 contacts-pannel">

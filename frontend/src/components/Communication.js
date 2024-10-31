@@ -110,4 +110,48 @@ export default class extends AbstractView {
       console.error("Error fetching organizers:", error);
     }
   }
+
+  /**
+   * validate the forms
+   */
+  validateEmailForm(data) {
+    let isValid = true;
+
+    isValid = validateField(data.email, "invalid-email") && isValid;
+    isValid = validateField(data.message, "invalid-username") && isValid;
+
+    return Boolean(isValid);
+  }
+  /* Collect data and send it to the server via AJAX */
+  handleEmailForm() {
+    document.querySelector("form").addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      //get the data from teh form
+      const emailData = {
+        to: document.getElementById("to").value,
+        cc: document.getElementById("cc").value,
+        bcc: document.getElementById("bcc").value,
+        subject: document.getElementById("subject"),
+        message: document.getElementById("message"),
+      };
+
+      try {
+        const response = await fetch("/send-email", {
+          method: "POST",
+          headers: { "Content-Type": application / json },
+          body: JSON.stringify(emailData),
+        });
+
+        if (response.ok) {
+          alert("Message sent succesfully!");
+        } else {
+          alert("Failed to send message");
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        alert("Error sending email.");
+      }
+    });
+  }
 }

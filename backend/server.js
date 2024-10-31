@@ -11,6 +11,7 @@ import mongoose from "mongoose";
 import eventRouter from "./routes/event-router.js";
 import organizerRouter from "./routes/organizer-router.js";
 import attandeeRouter from "./routes/attendee-router.js";
+import nodemailer from "nodemailer";
 
 dotenv.config();
 
@@ -24,6 +25,7 @@ mongoose
 
 //middleware
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 //serve DB data
 app.use("/api/events", eventRouter);
@@ -44,6 +46,39 @@ if (process.env.NODE_ENV === "production") {
     );
   });
 }
+
+//email
+app.post("/send-email", async (req, res) => {
+  const { to, cc, bcc, subject } = req.body;
+
+  // Configure SMTP transporter
+  const transporter = nodemailer.createTransport({
+    host: "smtp.sendgrid.net",
+    port: 465,
+    secure: false,
+    auth: {
+      user: "your-email@example.com",
+      pass: "your-password",
+    },
+  });
+
+  const mailOptions = {
+    from: "barrera_ml@hotmail.com",
+    to: "alva_mn@hotmail.com",
+    cc: cc || undefined,
+    bcc: bcc || undefined,
+    subject,
+    text: "This is a sample email message.", // Replace with actual message
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+    res.send("Email sent successfully!");
+  } catch (error) {
+    console.error("Error sending email:", error);
+    res.status(500).send("Failed to send email");
+  }
+});
 
 // Listen on port 5000
 const PORT = process.env.PORT || 5000;
