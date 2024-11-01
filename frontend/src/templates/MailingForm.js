@@ -25,7 +25,7 @@ const communicationsEmailingForm = (attendees, organizers) => `
                 <div class="border-bottom border-secondary-subttle">
                     <h5 class="text-center">Create New Message</h5>
                 </div>
-                <form>
+                <form class="message-form">
                     <div class="form-row mb-3">
                         <label for="to" class="col-2 col-sm-1 col-form-label fw-bold">To:</label>
                         <div class="col-10 col-sm-11">

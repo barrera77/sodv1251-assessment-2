@@ -54,6 +54,8 @@ export default class extends AbstractView {
 
     // Add event listeners or any additional setup
     this.handleContactButtons();
+
+    this.handleEmailForm();
   }
 
   handleContactButtons() {
@@ -111,17 +113,6 @@ export default class extends AbstractView {
     }
   }
 
-  /**
-   * validate the forms
-   */
-  validateEmailForm(data) {
-    let isValid = true;
-
-    isValid = validateField(data.email, "invalid-email") && isValid;
-    isValid = validateField(data.message, "invalid-username") && isValid;
-
-    return Boolean(isValid);
-  }
   /* Collect data and send it to the server via AJAX */
   handleEmailForm() {
     document.querySelector("form").addEventListener("submit", async (event) => {
@@ -132,19 +123,20 @@ export default class extends AbstractView {
         to: document.getElementById("to").value,
         cc: document.getElementById("cc").value,
         bcc: document.getElementById("bcc").value,
-        subject: document.getElementById("subject"),
-        message: document.getElementById("message"),
+        subject: document.getElementById("subject").value,
+        message: document.getElementById("message").value,
       };
 
       try {
         const response = await fetch("/send-email", {
           method: "POST",
-          headers: { "Content-Type": application / json },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(emailData),
         });
 
         if (response.ok) {
           alert("Message sent succesfully!");
+          this.resetForms();
         } else {
           alert("Failed to send message");
         }
@@ -153,5 +145,13 @@ export default class extends AbstractView {
         alert("Error sending email.");
       }
     });
+  }
+
+  resetForms() {
+    //clear inputs
+    document.querySelectorAll(".message-form input").forEach((input) => {
+      input.value = "";
+    });
+    document.getElementById("message").value = "";
   }
 }

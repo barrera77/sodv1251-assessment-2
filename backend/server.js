@@ -12,6 +12,11 @@ import eventRouter from "./routes/event-router.js";
 import organizerRouter from "./routes/organizer-router.js";
 import attandeeRouter from "./routes/attendee-router.js";
 import nodemailer from "nodemailer";
+import { fileURLToPath } from "url";
+
+// Get the current directory
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 dotenv.config();
 
@@ -68,13 +73,13 @@ app.post("/send-email", async (req, res) => {
       name: "Event Management System",
       address: process.env.SENDER_USERNAME,
     },
-    to: "alva_mn@hotmail.com",
-    cc: cc || undefined,
-    bcc: bcc || undefined,
+    to: to,
+    cc: cc || "",
+    bcc: bcc || "",
     subject,
     text: "Event Confirmation.", // Replace with actual message
-    attachment: [
-      {
+    attachments: [
+      /* {
         filename: "invitation.pdf",
         path: path.join(__dirname, "invitation.pdf"),
         contentType: "application/pdf",
@@ -83,11 +88,12 @@ app.post("/send-email", async (req, res) => {
         filename: "sample.jpg",
         path: path.join(__dirname, "sample.jpg"),
         contentType: "image/jpg",
-      },
+      }, */
     ],
   };
 
   try {
+    console.log("Received email data:", req.body);
     await transporter.sendMail(mailOptions);
     res.send("Email sent successfully!");
   } catch (error) {
