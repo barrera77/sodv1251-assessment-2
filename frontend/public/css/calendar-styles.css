@@ -2,7 +2,11 @@ a {
   text-decoration: none;
 }
 
-.container {
+.calendar-wrapper ul {
+  list-style: none;
+}
+
+.calendar-wrapper .container {
   align-items: center;
   display: flex;
   height: 100%;
@@ -13,7 +17,7 @@ a {
 }
 
 .calendar {
-  background: #2b4450;
+  background: #ff5733;
   border-radius: 4px;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
   height: 501px;
@@ -44,7 +48,7 @@ a {
 .week-days {
   color: #dfebed;
   display: flex;
-  justify-content: space-between;
+  gap: 2rem;
   font-weight: 600;
   padding: 30px 40px;
 }
@@ -58,8 +62,27 @@ a {
 .weeks {
   color: #fff;
   display: flex;
-  flex-direction: column;
-  padding: 0 40px;
+  flex-direction: row;
+  padding-top: 0.75rem !important;
+  padding-bottom: 0.75rem !important;
+  gap: 2rem;
+}
+
+.weeks li {
+  background-color: transparent;
+  border: none;
+}
+
+.btn-weekday {
+  background-color: transparent !important;
+  border-radius: unset;
+  border: none;
+  width: 100%;
+  color: #fff;
+}
+
+.btn-weekday:hover {
+  font-weight: bold;
 }
 
 .weeks div {
@@ -75,8 +98,9 @@ a {
   opacity: 0.3;
 }
 
-.weeks span {
-  padding: 10px;
+.weeks li {
+  width: calc(100% / 7);
+  text-align: center;
 }
 
 .weeks span.active {
@@ -109,19 +133,24 @@ a {
   transform: rotateY(180deg);
 }
 
-.back input {
+.back select {
   background: none;
   border: none;
-  border-bottom: 1px solid rgba(73, 114, 133, 0.6);
-  color: #dfebed;
+  border-bottom: 1px solid #fff;
+  color: #fff;
   font-size: 1.4em;
   font-weight: 300;
   padding: 30px 40px;
   width: 100%;
 }
 
+.back select option {
+  background-color: #ff5733;
+  color: #fff;
+}
+
 .info {
-  color: #dfebed;
+  color: #fff;
   display: flex;
   flex-direction: column;
   font-weight: 600;
@@ -129,6 +158,11 @@ a {
   padding: 30px 40px;
 }
 
+/*
+* :not(.observations): This pseudo-class negates the selector,
+* meaning it targets all div elements that do not have the 
+* class observations.
+*/
 .info div:not(.observations) {
   margin-bottom: 40px;
 }
@@ -152,7 +186,7 @@ a {
 
 .actions {
   bottom: 0;
-  border-top: 1px solid rgba(73, 114, 133, 0.6);
+  border-top: 1px solid #fff;
   display: flex;
   justify-content: space-between;
   position: absolute;
@@ -172,17 +206,19 @@ a {
 }
 
 .actions button:first-of-type {
-  border-right: 1px solid rgba(73, 114, 133, 0.6);
+  border-right: 1px solid #fff;
 }
 
 .actions button:hover {
-  background: #497285;
+  background: #fff;
   cursor: pointer;
+  color: #ff5733;
 }
 
 .actions button:active {
-  background: #5889a0;
+  background: #fff;
   outline: none;
+  color: #ff5733;
 }
 
 /* Flip animation */

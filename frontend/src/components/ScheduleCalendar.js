@@ -19,23 +19,7 @@ const calendar = (weekdays, weeks) => `
         </ul>
 
         <div class="weeks">
-          ${weeks
-            .map(
-              (week) => `
-              <div class="week">
-                ${week
-                  .map(
-                    (dayObj) => `
-                    <div class="day ${dayObj.isToday ? "today" : ""}">
-                      ${dayObj.day || ""}
-                    </div>
-                  `
-                  )
-                  .join("")}
-              </div>
-            `
-            )
-            .join("")}
+         
         </div>
       </div>
     </div>
