@@ -2,6 +2,14 @@ a {
   text-decoration: none;
 }
 
+.calendar-section {
+  max-width: 90%;
+  width: 90%;
+  margin: auto;
+  padding: 1rem;
+  background-color: #fff;
+}
+
 .calendar-wrapper ul {
   list-style: none;
 }
@@ -11,7 +19,6 @@ a {
   display: flex;
   height: 100%;
   justify-content: center;
-  margin: 0 auto;
   max-width: 600px;
   width: 100%;
 }
@@ -33,9 +40,7 @@ a {
 }
 
 .current-date {
-  border-bottom: 1px solid rgba(73, 114, 133, 0.6);
-  display: flex;
-  justify-content: space-between;
+  border-bottom: 1px solid #fff;
   padding: 30px 40px;
 }
 
@@ -119,11 +124,16 @@ a {
 
 .event:after {
   content: "•";
-  color: #f78536;
+  color: rgb(35, 245, 35);
   font-size: 1.4em;
   position: absolute;
   right: -4px;
   top: -4px;
+}
+
+.no-event {
+  border-left: 3px solid #ff5733;
+  background-color: #f8dfd8;
 }
 
 /* Back - Event form */
@@ -155,29 +165,27 @@ a {
   flex-direction: column;
   font-weight: 600;
   font-size: 1.2em;
-  padding: 30px 40px;
-}
-
-/*
-* :not(.observations): This pseudo-class negates the selector,
-* meaning it targets all div elements that do not have the 
-* class observations.
-*/
-.info div:not(.observations) {
-  margin-bottom: 40px;
+  gap: 4rem;
+  margin: auto;
+  width: 90%;
 }
 
 .info span {
   font-weight: 300;
 }
 
-.info .date {
+/* .info .date {
   display: flex;
   justify-content: space-between;
 }
 
 .info .date p {
   width: 50%;
+} */
+
+.input-group-addon {
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .info .address p {

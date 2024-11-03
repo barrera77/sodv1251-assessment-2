@@ -48,22 +48,18 @@ export default class extends AbstractView {
     this.manageState();
 
     return `
-    <section class="py-3">
-      <div class="container bg-white p-3">
-        <div class="border-bottom border-secondary-subttle">
+    <section class="py-3 calendar-section">
+    <div class="border-bottom border-secondary-subttle">
           <h5><i class="bi bi-person-check"></i> Schedule/Agenda</h5>
         </div>
+      <div class="row calendar-row">
+      <div class="col-7 bg-white p-3">        
         <div class="calendar-container py-5">
           <div class="calendar-wrapper">
             <div class="container">
               <div class="calendar">
                 <div class="front">
-                  <div class="current-date">
-                    <h1 class="fw-bold">
-                      ${dayOfTheWeek} ${dayOfTheMonth}${getOrdinalSuffix(
-      dayOfTheMonth
-    )}
-                    </h1>
+                  <div class="current-date text-center">                    
                     <h1 class="fw-bold">${formattedDate}</h1>
                   </div>
 
@@ -87,7 +83,10 @@ export default class extends AbstractView {
                           .map(
                             (day) => `
                         <li class="day">
-                          <button class="btn-weekday">${day || ""}</button>
+                          <button class="btn-weekday" data-date="${this.year}-${
+                              this.month + 1
+                            }-${day}">${day || ""}</button>
+                          <span class="event"></span>
                         </li>
                         `
                           )
@@ -108,10 +107,23 @@ export default class extends AbstractView {
                         `
                       )}
                   </select>
-                  <div class="info">
-                    <div class="date">
-                      <p class="info-date">Date: <span>Jan 15th, 2016</span></p>
-                      <p class="info-time">Time: <span>6:35 PM</span></p>
+                  <div class="info py-4">
+                    <div class="date row w-100 m-auto">                     
+                      <div class="col-4 p-0 d-flex gap-2">
+                        <p>Date:</p>
+                        <span class="info-date"></span>
+                      </div>
+
+                      <div class="col-8">
+                        <div class="form-group d-flex gap-2">
+                          <label for="time">Time: </label>
+                          <div class="input-group date" id="timePicker">
+                            <input type="text" class="form-control timePicker">
+                            <span class="input-group-addon border px-2"><i class="bi bi-clock"></i></span>
+                          </div>
+                        </div>
+                      </div>
+                      
                     </div>
                     <div class="address">
                       <p>Address: <span></span></p>
@@ -135,6 +147,35 @@ export default class extends AbstractView {
             </div>
           </div>
         </div>
+      </div>
+
+      <div class="col-5 py-3">
+        <div>
+          <div class="pt-5 pb-2 border-bottom">
+            <p>Events for today</p>
+            <h2 class="fw-bold">
+            ${dayOfTheWeek} ${dayOfTheMonth}${getOrdinalSuffix(dayOfTheMonth)}
+            </h2>
+          </div>
+
+          <div class="no-event py-3 ps-3 mt-3">
+            <p>No events in schedule for today</p>
+          </div>
+        </div>
+
+        <div class="py-3">
+          <div class="py-3 border-bottom">
+             <h2 class="fw-bold">Upcoming Events</h2>
+          </div>
+          <div class="py-3">
+          Upcoming events List 
+          </div>
+        </div>
+       
+          
+      </div>
+
+      
       </div>
     </section>  
    `;
@@ -170,8 +211,16 @@ export default class extends AbstractView {
 
       bindUIActions() {
         this.settings.days.forEach((day) => {
-          day.addEventListener("click", () => {
+          day.addEventListener("click", (event) => {
+            //const dayButton = document.querySelector(".btn-weekday");
+            const selectedDate = event.currentTarget.getAttribute("data-date"); // Capture the date
+
             this.swap(this.settings.calendar, this.settings.form);
+            const dateElement = document.querySelector(".info-date");
+            if (dateElement) {
+              dateElement.textContent = selectedDate;
+            }
+
             this.settings.input.focus();
           });
         });
@@ -190,6 +239,13 @@ export default class extends AbstractView {
     const eventSelect = document.getElementById("events");
     if (eventSelect) {
       eventSelect.addEventListener("change", () => this.populateEventDetails());
+    }
+  }
+
+  populateSelectedDate(selectedDate) {
+    const dateElement = document.querySelector(".info-date span");
+    if (dateElement) {
+      dateElement.textContent = selectedDate;
     }
   }
 
