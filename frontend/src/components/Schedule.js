@@ -1,5 +1,6 @@
 import AbstractView from "./AbstractView.js";
 import { getData, saveData } from "../utils/api-utility.js";
+import eventScheduleCard from "../templates/EventScheduleCard.js";
 
 const EVENTS_END_POINT = "/api/events";
 const SCHEDULE_END_POINT = "/api/eventsSchedule";
@@ -13,6 +14,7 @@ export default class extends AbstractView {
     this.month = this.currentDate.getMonth();
     this.year = this.currentDate.getFullYear();
     this.eventsList = [];
+    this.scheduleList = [];
   }
 
   async getHtml() {
@@ -277,7 +279,6 @@ export default class extends AbstractView {
        */
       scheduleEvent() {
         let newSchedule = "";
-        //const SCHEDULE_END_POINT = "/api/eventsSchedule";
 
         if (this.validateFields()) {
           const eventId = this.settings.select.value;
@@ -357,6 +358,20 @@ export default class extends AbstractView {
       return events;
     } catch (error) {
       console.error("Error fetching events:", error);
+    }
+  }
+
+  /**
+   * fetch the schedule from the server
+   * @returns schedule array
+   */
+  async fetchSchedule() {
+    try {
+      const schedule = await getData(SCHEDULE_END_POINT);
+      //console.table(events);
+      return schedule;
+    } catch (error) {
+      console.error("Error fetching schedule:", error);
     }
   }
 
@@ -450,6 +465,20 @@ export default class extends AbstractView {
         timeSelector.focus();
       });
     }
+  }
+
+  async renderUpcomingEvents() {
+    this.scheduleList = await this.fetchSchedule();
+
+    this.scheduleList.forEach((schedule) => {
+      const scheduleList = this.eventsList.find(
+        (event) => event._id === schedule._id
+      );
+
+      const rows = scheduleList.map((item) => eventScheduleCard(item)).join("");
+
+      return rows;
+    });
   }
 
   scheduleEvent() {
