@@ -168,11 +168,11 @@ export default class extends AbstractView {
       </div>
       <div class="col-5 py-3">
         <div>
-          <div class="pt-5 pb-2 border-bottom">
-            <p>Events for today</p>
-            <h2 class="fw-bold">
+          <div class="pt-5 pb-2 border-bottom d-flex justify-content-between align-items-center">
+            <p class="m-0">Events for today</p>
+            <h3 class="fw-bold m-0">
             ${dayOfTheWeek} ${dayOfTheMonth}${getOrdinalSuffix(dayOfTheMonth)}
-            </h2>
+            </h3>
           </div>
           <div class="no-event py-3 ps-3 mt-3">
             <p>No events in schedule for today</p>
