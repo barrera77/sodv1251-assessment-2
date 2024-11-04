@@ -1,7 +1,8 @@
 import AbstractView from "./AbstractView.js";
-import { getData } from "../utils/api-utility.js";
+import { getData, saveData } from "../utils/api-utility.js";
 
 const EVENTS_END_POINT = "/api/events";
+const SCHEDULE_END_POINT = "/api/eventsSchedule";
 
 export default class extends AbstractView {
   constructor(params) {
@@ -100,7 +101,7 @@ export default class extends AbstractView {
                 </div>
                 <div class="back">
                   <select name="events" id="events">
-                      <option value"" selected>"What's the event?"</option>
+                      <option value"0" selected>"What's the event?"</option>
                       ${this.eventsList.map(
                         (event) => `
                         <option value="${event._id}">${event.name}</option>
@@ -126,11 +127,11 @@ export default class extends AbstractView {
                       
                     </div>
                     <div class="address">
-                      <p>Address: <span></span></p>
+                      <p>Address: <span class="info-address"></span></p>
                     </div>
                     <div class="observations">
                       <p>
-                        Observations: <span>Be there 15 minutes earlier</span>
+                        Observations: <span>Please arrive 10-15 minutes earlier</span>
                       </p>
                     </div>
                   </div>
@@ -148,7 +149,6 @@ export default class extends AbstractView {
           </div>
         </div>
       </div>
-
       <div class="col-5 py-3">
         <div>
           <div class="pt-5 pb-2 border-bottom">
@@ -157,12 +157,10 @@ export default class extends AbstractView {
             ${dayOfTheWeek} ${dayOfTheMonth}${getOrdinalSuffix(dayOfTheMonth)}
             </h2>
           </div>
-
           <div class="no-event py-3 ps-3 mt-3">
             <p>No events in schedule for today</p>
           </div>
         </div>
-
         <div class="py-3">
           <div class="py-3 border-bottom">
              <h2 class="fw-bold">Upcoming Events</h2>
@@ -170,12 +168,8 @@ export default class extends AbstractView {
           <div class="py-3">
           Upcoming events List 
           </div>
-        </div>
-       
-          
-      </div>
-
-      
+        </div>            
+      </div>      
       </div>
     </section>  
    `;
@@ -185,63 +179,166 @@ export default class extends AbstractView {
    * function to handle the post-rendering logic
    */
   manageState() {
-    /*Calendar effects based on https://codepen.io/gabrielcolombo*/
+    //initialize calendar components adn logic on flip
+    this.initializeCalendar();
 
-    //Flip the calendar
+    //Add event listener to teh select after flipping the calendar
+    const eventSelect = document.getElementById("events");
+    if (eventSelect) {
+      eventSelect.addEventListener("change", () => this.populateEventDetails());
+    }
+
+    //get the itimepicker
+    this.createTimePicker();
+  }
+
+  /**
+   * Initialize the calendar component to accesss the form
+   * to add events to the schedule
+   */
+  initializeCalendar() {
+    //Calendar effects based on https://codepen.io/gabrielcolombo
     const app = {
       settings: {
         container: document.querySelector(".calendar"),
         calendar: document.querySelector(".front"),
         days: document.querySelectorAll(".weeks button"),
         form: document.querySelector(".back"),
-        input: document.querySelector(".back select"),
-        buttons: document.querySelectorAll(".back button"),
+        select: document.querySelector(".back select"),
+        dismiss: document.querySelector(".dismiss"),
+        save: document.querySelector(".save"),
+        address: document.querySelector(".info-address"),
+        date: document.querySelector(".info-date"),
+        time: document.querySelector(".timePicker"),
+        observations: document.querySelector(".observations span"),
       },
 
+      /**
+       * Initialize app (set up event listeners).
+       */
       init() {
         this.bindUIActions();
       },
 
+      /**
+       * Flip between the front and back of the calendar
+       * @param {*} currentSide
+       * @param {*} desiredSide
+       */
       swap(currentSide, desiredSide) {
         this.settings.container.classList.toggle("flip");
+
+        // Reset select input value
+        if (desiredSide === this.settings.calendar) {
+          this.settings.select.selectedIndex = 0; // Set events default value
+          this.settings.address.textContent = "";
+        }
 
         currentSide.style.display = "none"; // Hide the current side
         desiredSide.style.display = "block"; // Show the desired side
       },
 
+      /**
+       * Add event listeners to interactive elements
+       */
       bindUIActions() {
         this.settings.days.forEach((day) => {
           day.addEventListener("click", (event) => {
-            //const dayButton = document.querySelector(".btn-weekday");
-            const selectedDate = event.currentTarget.getAttribute("data-date"); // Capture the date
-
+            const selectedDate = event.currentTarget.getAttribute("data-date");
             this.swap(this.settings.calendar, this.settings.form);
             const dateElement = document.querySelector(".info-date");
             if (dateElement) {
               dateElement.textContent = selectedDate;
             }
-
-            this.settings.input.focus();
+            this.settings.select.focus();
           });
         });
 
-        this.settings.buttons.forEach((button) => {
-          button.addEventListener("click", () => {
+        if (this.settings.dismiss) {
+          this.settings.dismiss.addEventListener("click", () => {
             this.swap(this.settings.form, this.settings.calendar);
           });
-        });
+        }
+
+        //create a schedule object
+        if (this.settings.save) {
+          this.settings.save.addEventListener("click", (event) => {
+            event.preventDefault();
+
+            this.scheduleEvent();
+            alert("Event added to the schedule");
+            this.swap(this.settings.form, this.settings.calendar);
+          });
+        }
+      },
+
+      /**
+       * Create schedule object
+       */
+      scheduleEvent() {
+        let newSchedule = "";
+        //const SCHEDULE_END_POINT = "/api/eventsSchedule";
+
+        if (this.validateFields()) {
+          const eventId = this.settings.select.value;
+          const eventDate = this.settings.date.textContent;
+          const eventTime = this.settings.time.value;
+          const eventAddress = this.settings.address.textContent;
+          const eventObservations = this.settings.observations.textContent;
+
+          newSchedule = {
+            eventId: eventId,
+            startDate: eventDate,
+            startTime: eventTime,
+            observations: eventObservations,
+          };
+          this.saveScheduleData(SCHEDULE_END_POINT, newSchedule);
+        }
+      },
+
+      async saveScheduleData(newSchedule, endpoint) {
+        try {
+          await saveData(newSchedule, endpoint);
+        } catch (error) {
+          console.error("Error saving the schedule:", error);
+        }
+      },
+
+      validateFields() {
+        const currentDate = new Date();
+        currentDate.setHours(0, 0, 0, 0); // Set to midnight for comparison
+
+        const selectedDate = new Date(this.settings.date?.textContent);
+        selectedDate.setHours(0, 0, 0, 0); // Set selected date to midnight as well
+
+        if (selectedDate < currentDate) {
+          console.log("Invalid date: Date cannot be before today.");
+          return false;
+        } else if (this.settings.select?.selectedIndex === 0) {
+          console.log("Please select an event from the list");
+          return false;
+        } else if (!this.settings.address?.textContent) {
+          console.log("Address cannot be null, please select an event");
+          return false;
+        } else if (!this.settings.time?.value) {
+          console.log("Please select a time for the event");
+          return false;
+        }
+
+        return true;
       },
     };
 
+    /**
+     * Initialize the app object
+     */
     app.init();
-
-    //Add event listener to teh sel;ect after flipping the calendar
-    const eventSelect = document.getElementById("events");
-    if (eventSelect) {
-      eventSelect.addEventListener("change", () => this.populateEventDetails());
-    }
   }
 
+  /**
+   * pass the selected date to the form date element
+   * @param {*} selectedDate
+   */
   populateSelectedDate(selectedDate) {
     const dateElement = document.querySelector(".info-date span");
     if (dateElement) {
@@ -303,33 +400,71 @@ export default class extends AbstractView {
         weekArray = new Array(7).fill(null);
       }
     }
-
     return calendarArray;
   }
 
-  // Function to populate the event details
+  /**
+   * populate the event details in the correspopnding elements of
+   * the form
+   */
   populateEventDetails() {
     const selectElement = document.getElementById("events");
     const selectedValue = selectElement.value;
 
-    //selectElement.addEventListener("change", populateEventDetails);
-
     // Get the details of the selected event
-    const eventDetails = this.eventsList.find(
+    const selectedEvent = this.eventsList.find(
       (event) => event._id === selectedValue
     );
 
     // Update the info section if an event is selected
-    if (eventDetails) {
-      //document.getElementById("event-date").textContent = eventDetails.date;
-      //document.getElementById("event-time").textContent = ;
-      document.querySelector(".address span").textContent =
-        eventDetails.location;
-    } else {
-      // Clear the details if no valid event is selected
-      //document.getElementById("event-date").textContent = "";
-      //document.getElementById("event-time").textContent = "";
-      document.querySelector(".address span").textContent = "";
+    if (selectedEvent) {
+      const addressElement = document.querySelector(".info-address");
+      let eventLocation = selectedEvent.location;
+
+      if (addressElement) {
+        addressElement.textContent = eventLocation;
+
+        console.log("address?", addressElement.textContent);
+      }
+    }
+  }
+
+  /**
+   * Create a TimePicker using an instance of flatpickr from
+   * https://flatpickr.js.org/
+   */
+  createTimePicker() {
+    const timeSelector = document.querySelector(".timePicker");
+    const clockIcon = document.querySelector("#timePicker .input-group-addon");
+
+    if (timeSelector) {
+      flatpickr(timeSelector, {
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "h:i:K",
+      });
+    }
+    // show the timepicker when clicking the clock icon
+    if (clockIcon) {
+      clockIcon.addEventListener("click", () => {
+        timeSelector.focus();
+      });
+    }
+  }
+
+  scheduleEvent() {
+    const dateElement = document.querySelector(".info-date");
+    const timeElement = document.querySelector(".timePicker");
+    const addressElement = document.querySelector(".info-address");
+    const observationsElement = document.querySelector(".observations span");
+
+    if (dateElement && timeElement && addressElement && observationsElement) {
+      const date = dateElement.textContent;
+      const time = timeElement.value;
+      const address = addressElement.textContent;
+      const observations = observationsElement.textContent;
+
+      console.log(date, time, address, observations);
     }
   }
 }

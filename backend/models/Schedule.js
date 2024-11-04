@@ -1,3 +1,5 @@
+import mongoose from "mongoose";
+
 const scheduleSchema = new mongoose.Schema({
   eventId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -12,4 +14,11 @@ const scheduleSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  observations: {
+    type: String,
+    required: false,
+  },
 });
+
+const Schedule = mongoose.model("Schedule", scheduleSchema, "eventsSchedule");
+export default Schedule;

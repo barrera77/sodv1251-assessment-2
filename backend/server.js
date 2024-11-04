@@ -13,6 +13,7 @@ import organizerRouter from "./routes/organizer-router.js";
 import attandeeRouter from "./routes/attendee-router.js";
 import nodemailer from "nodemailer";
 import { fileURLToPath } from "url";
+import scheduleRouter from "./routes/schedule-router.js";
 
 // Get the current directory
 const __filename = fileURLToPath(import.meta.url);
@@ -36,6 +37,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/events", eventRouter);
 app.use("/api/organizers", organizerRouter);
 app.use("/api/attendees", attandeeRouter);
+app.use("/api/eventsSchedule", scheduleRouter);
 
 // Serve static assets in production mode
 if (process.env.NODE_ENV === "production") {
