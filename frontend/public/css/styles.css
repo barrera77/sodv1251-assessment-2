@@ -196,6 +196,30 @@ h5 {
   font-size: 12px !important;
 }
 
+/* ------------------ */
+/*      Schedule      */
+/* ------------------ */
+
+.card-image-container {
+  position: relative;
+}
+
+.card-image-container .category-box {
+  position: absolute;
+  top: 2%;
+  width: auto !important;
+  text-align: center;
+}
+
+.scroll-wrapper {
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.event-schedule-container {
+  height: 370px;
+}
+
 @media (max-width: 767.98px) {
   .sidebar {
     top: 5rem;

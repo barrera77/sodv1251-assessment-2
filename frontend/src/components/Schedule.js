@@ -19,6 +19,8 @@ export default class extends AbstractView {
 
   async getHtml() {
     this.eventsList = await this.fetchEvents();
+    this.scheduleList = await this.fetchSchedule();
+
     const formattedDate = this.currentDate.toLocaleDateString("en-US", {
       year: "numeric",
       month: "long",
@@ -49,6 +51,19 @@ export default class extends AbstractView {
 
     //Manage post-rendering
     this.manageState();
+
+    this.rows = [];
+
+    //get the upcoming events
+    const rows = this.scheduleList
+      .map((schedule) => {
+        const matchingEvent = this.eventsList.find(
+          (event) => event._id === schedule.eventId
+        );
+
+        return eventScheduleCard(schedule, matchingEvent);
+      })
+      .join("");
 
     return `
     <section class="py-3 calendar-section">
@@ -167,8 +182,10 @@ export default class extends AbstractView {
           <div class="py-3 border-bottom">
              <h2 class="fw-bold">Upcoming Events</h2>
           </div>
-          <div class="py-3">
-          Upcoming events List 
+          <div class="scroll-wrapper">
+            <div class="py-2 event-schedule-container">
+            ${rows}
+            </div>
           </div>
         </div>            
       </div>      
@@ -368,7 +385,7 @@ export default class extends AbstractView {
   async fetchSchedule() {
     try {
       const schedule = await getData(SCHEDULE_END_POINT);
-      //console.table(events);
+      //console.table(schedule);
       return schedule;
     } catch (error) {
       console.error("Error fetching schedule:", error);
@@ -479,21 +496,5 @@ export default class extends AbstractView {
 
       return rows;
     });
-  }
-
-  scheduleEvent() {
-    const dateElement = document.querySelector(".info-date");
-    const timeElement = document.querySelector(".timePicker");
-    const addressElement = document.querySelector(".info-address");
-    const observationsElement = document.querySelector(".observations span");
-
-    if (dateElement && timeElement && addressElement && observationsElement) {
-      const date = dateElement.textContent;
-      const time = timeElement.value;
-      const address = addressElement.textContent;
-      const observations = observationsElement.textContent;
-
-      console.log(date, time, address, observations);
-    }
   }
 }
