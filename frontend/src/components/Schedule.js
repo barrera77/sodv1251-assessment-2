@@ -322,6 +322,8 @@ export default class extends AbstractView {
         }
       },
 
+      //TODO: revise validation, is notstoping the flow if it has errors
+
       validateFields() {
         const currentDate = new Date();
         currentDate.setHours(0, 0, 0, 0); // Set to midnight for comparison
