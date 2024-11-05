@@ -13,8 +13,6 @@ export default class extends AbstractView {
     this.currentDate = new Date();
     this.month = this.currentDate.getMonth();
     this.year = this.currentDate.getFullYear();
-    this.eventsList = [];
-    this.scheduleList = [];
   }
 
   async getHtml() {
@@ -104,7 +102,10 @@ export default class extends AbstractView {
                           <button class="btn-weekday" data-date="${this.year}-${
                               this.month + 1
                             }-${day}">${day || ""}</button>
-                          <span class="event"></span>
+                            <span data-date="${this.year}-${this.month + 1}-${
+                              day + 1
+                            }" class="event" style="display: none;"></span>
+                          
                         </li>
                         `
                           )
@@ -209,6 +210,8 @@ export default class extends AbstractView {
 
     //get the itimepicker
     this.createTimePicker();
+
+    this.markSchedule();
   }
 
   /**
@@ -222,6 +225,7 @@ export default class extends AbstractView {
         container: document.querySelector(".calendar"),
         calendar: document.querySelector(".front"),
         days: document.querySelectorAll(".weeks button"),
+        event: document.querySelector(".event"),
         form: document.querySelector(".back"),
         select: document.querySelector(".back select"),
         dismiss: document.querySelector(".dismiss"),
@@ -356,17 +360,6 @@ export default class extends AbstractView {
   }
 
   /**
-   * pass the selected date to the form date element
-   * @param {*} selectedDate
-   */
-  populateSelectedDate(selectedDate) {
-    const dateElement = document.querySelector(".info-date span");
-    if (dateElement) {
-      dateElement.textContent = selectedDate;
-    }
-  }
-
-  /**
    * fetch the events from the server
    * @returns events array
    */
@@ -486,10 +479,8 @@ export default class extends AbstractView {
     }
   }
 
-  async renderUpcomingEvents() {
-    this.scheduleList = await this.fetchSchedule();
-
-    this.scheduleList.forEach((schedule) => {
+  renderUpcomingEvents() {
+    scheduleList.forEach((schedule) => {
       const scheduleList = this.eventsList.find(
         (event) => event._id === schedule._id
       );
@@ -497,6 +488,41 @@ export default class extends AbstractView {
       const rows = scheduleList.map((item) => eventScheduleCard(item)).join("");
 
       return rows;
+    });
+  }
+
+  /**
+   * Mark teh dates that have events on them already for reference
+   */
+  markSchedule() {
+    const eventElements = document.querySelectorAll(".event");
+    let datesToCompare = [];
+
+    this.scheduleList.forEach((schedule) => {
+      const date = new Date(schedule.startDate);
+
+      if (!isNaN(date.getTime())) {
+        datesToCompare.push(date);
+      }
+    });
+
+    eventElements.forEach((event) => {
+      const eventDate = new Date(event.getAttribute("data-date")); // Get date from event element
+
+      if (!isNaN(eventDate.getTime())) {
+        const dateToMark = datesToCompare.some(
+          (date) => date.getTime() === eventDate.getTime()
+        );
+
+        //Mark the date if any matches
+        if (dateToMark) {
+          event.style.display = "inline";
+        }
+      } else {
+        console.warn(
+          `Invalid date for event: ${event.getAttribute("data-date")}`
+        );
+      }
     });
   }
 }
