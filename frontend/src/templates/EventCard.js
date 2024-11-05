@@ -1,4 +1,5 @@
-const eventCard = (event) => {
+const eventCard = (event, date) => {
+  //Shorten the description to use as an intro
   const maxLenght = 180;
   const intro =
     event.description.length > maxLenght
@@ -19,7 +20,7 @@ const eventCard = (event) => {
             <div class="pt-3 d-flex justify-content-between align-items-center">
                 <div class="fs-5">
                     <i class="bi bi-calendar-date"></i>
-                    <span>Date</span>
+                    <span>${date}</span>
                 </div>
                 <div>
                     <a href="" class="category-box">${event.category}</a>

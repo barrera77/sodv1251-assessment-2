@@ -3,18 +3,37 @@ import { getData } from "../utils/api-utility.js";
 import eventCard from "../templates/EventCard.js";
 
 const EVENTS_END_POINT = "/api/events";
+const SCHEDULE_END_POINT = "/api/eventsSchedule";
 
 export default class extends AbstractView {
   constructor(params) {
     super(params);
     this.setTitle("Events");
     this.eventsList = [];
+    this.scheduleList = [];
   }
 
   async getHtml() {
     this.eventsList = await this.fetchEvents();
+    this.scheduleList = await this.fetchSchedule();
 
-    const rows = this.eventsList.map((event) => eventCard(event)).join("");
+    const rows = this.eventsList.map((event) => {
+      let matchingEvent = this.scheduleList.find(
+        (match) => match.eventId === event._id
+      );
+
+      // Check if any event has been scheduled
+      const date = matchingEvent ? new Date(matchingEvent.startDate) : null;
+      const formattedDate = date
+        ? date.toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "numeric",
+            day: "2-digit",
+          })
+        : "No date available";
+
+      return eventCard(event, formattedDate); // Pass formattedDate to eventCard
+    });
 
     return `
     <section>
@@ -42,6 +61,19 @@ export default class extends AbstractView {
       return events;
     } catch (error) {
       console.error("Error fetching events:", error);
+    }
+  }
+  /**
+   * fetch the schedule from the server
+   * @returns schedule array
+   */
+  async fetchSchedule() {
+    try {
+      const schedule = await getData(SCHEDULE_END_POINT);
+      //console.table(schedule);
+      return schedule;
+    } catch (error) {
+      console.error("Error fetching schedule:", error);
     }
   }
 }
