@@ -239,3 +239,7 @@ a {
 .back {
   backface-visibility: hidden;
 }
+
+.feedback-container {
+  border-radius: 5px;
+}

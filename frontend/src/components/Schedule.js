@@ -166,6 +166,9 @@ export default class extends AbstractView {
             </div>
           </div>
         </div>
+        <div class="feedback-container py-4 container border border-danger text-center" style="display: none">
+        <span class="feedback"></span>
+        </div>
       </div>
       <div class="col-5 py-3">
         <div>
@@ -279,6 +282,14 @@ export default class extends AbstractView {
 
         if (this.settings.dismiss) {
           this.settings.dismiss.addEventListener("click", () => {
+            const feedbackElement = document.querySelector(".feedback");
+            const feedbackContainer = document.querySelector(
+              ".feedback-container"
+            );
+
+            feedbackElement.textContent = "";
+            feedbackContainer.style.display = "none";
+            this.settings.time.value = "";
             this.swap(this.settings.form, this.settings.calendar);
           });
         }
@@ -288,9 +299,11 @@ export default class extends AbstractView {
           this.settings.save.addEventListener("click", (event) => {
             event.preventDefault();
 
-            this.scheduleEvent();
-            alert("Event added to the schedule");
-            this.swap(this.settings.form, this.settings.calendar);
+            if (!this.validateFields()) {
+              return;
+            } else {
+              this.scheduleEvent();
+            }
           });
         }
       },
@@ -301,26 +314,26 @@ export default class extends AbstractView {
       scheduleEvent() {
         let newSchedule = "";
 
-        if (this.validateFields()) {
-          const eventId = this.settings.select.value;
-          const eventDate = this.settings.date.textContent;
-          const eventTime = this.settings.time.value;
-          const eventAddress = this.settings.address.textContent;
-          const eventObservations = this.settings.observations.textContent;
+        const eventId = this.settings.select.value;
+        const eventDate = this.settings.date.textContent;
+        const eventTime = this.settings.time.value;
+        const eventAddress = this.settings.address.textContent;
+        const eventObservations = this.settings.observations.textContent;
 
-          newSchedule = {
-            eventId: eventId,
-            startDate: eventDate,
-            startTime: eventTime,
-            observations: eventObservations,
-          };
-          this.saveScheduleData(SCHEDULE_END_POINT, newSchedule);
-        }
+        newSchedule = {
+          eventId: eventId,
+          startDate: eventDate,
+          startTime: eventTime,
+          observations: eventObservations,
+        };
+        this.saveScheduleData(SCHEDULE_END_POINT, newSchedule);
+        alert("Event added to the schedule");
+        this.swap(this.settings.form, this.settings.calendar);
       },
 
       async saveScheduleData(newSchedule, endpoint) {
         try {
-          await saveData(newSchedule, endpoint);
+          await saveData(endpoint, newSchedule);
         } catch (error) {
           console.error("Error saving the schedule:", error);
         }
@@ -329,6 +342,9 @@ export default class extends AbstractView {
       //TODO: revise validation, is notstoping the flow if it has errors
 
       validateFields() {
+        const feedbackElement = document.querySelector(".feedback");
+        const feedbackContainer = document.querySelector(".feedback-container");
+
         const currentDate = new Date();
         currentDate.setHours(0, 0, 0, 0); // Set to midnight for comparison
 
@@ -337,19 +353,33 @@ export default class extends AbstractView {
 
         if (selectedDate < currentDate) {
           console.log("Invalid date: Date cannot be before today.");
-          return false;
-        } else if (this.settings.select?.selectedIndex === 0) {
-          console.log("Please select an event from the list");
-          return false;
-        } else if (!this.settings.address?.textContent) {
-          console.log("Address cannot be null, please select an event");
-          return false;
-        } else if (!this.settings.time?.value) {
-          console.log("Please select a time for the event");
+          feedbackContainer.style.display = "block";
+          feedbackElement.textContent =
+            "Invalid date: Date cannot be before today.";
+
           return false;
         }
-
-        return true;
+        if (this.settings.select?.selectedIndex === 0) {
+          console.log("Please select an event from the list");
+          feedbackContainer.style.display = "block";
+          feedbackElement.textContent = "Please select an event from the list.";
+          return false;
+        }
+        if (!this.settings.address?.textContent) {
+          console.log("Address cannot be null, please select an event");
+          feedbackContainer.style.display = "block";
+          feedbackElement.textContent =
+            "Address cannot be null, please select an event.";
+          return false;
+        }
+        if (!this.settings.time?.value) {
+          console.log("Please select a time for the event");
+          feedbackContainer.style.display = "block";
+          feedbackElement.textContent = "Please select a time for the event.";
+          return false;
+        } else {
+          return true;
+        }
       },
     };
 
