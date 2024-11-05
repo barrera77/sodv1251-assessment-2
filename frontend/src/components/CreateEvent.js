@@ -23,13 +23,13 @@ export default class extends AbstractView {
         <div>
             <div>
 
-                <form>
+                <form method="post" enctype="multipart/form-data">
                     <div>                    
                         <div class="row py-4">
                             <label class="form-label col-3" for="event-name">Event Name:</label>
                             <input class="form-control col-8 w-50" name="event-name" id="event-name" type="text"></input>
                         </div>
-                        <div class="row py-4">
+                        <div class="row">
                             <label class="form-label col-3" for="event-description">Description:</label>
                             <input class="form-control col-8 w-50" name="event-description" id="event-description" type="text"></input>
                         </div>
@@ -37,9 +37,9 @@ export default class extends AbstractView {
                             <label class="form-label col-3" for="event-topics">Topics to Cover:</label>
                             <input class="form-control col-8 w-50" name="event-topics" id="event-topics" type="text" placeholder="e.g. ReactJS, Bootstrap, NodeJS"></input>
                         </div>
-                        <div class="row py-4">
+                        <div class="row">
                             <label class="form-label col-3" for="event-location">Location:</label>
-                            <input class="form-control col-8 w-50" name="event-location" id="event-location" type="text" placeholder="e.g. ReactJS, Bootstrap, NodeJS"></input>
+                            <input class="form-control col-8 w-50" name="event-location" id="event-location" type="text"></input>
                         </div>
                         <div class="row py-4">
                             <label class="form-label col-3" for="event-delivery">Delivery Mode:</label>
@@ -50,7 +50,7 @@ export default class extends AbstractView {
                                 <option value="Hybrid">Hybrid</option>
                             </select>
                         </div>
-                        <div class="row py-4">
+                        <div class="row">
                             <label class="form-label col-3" for="event-capacity">Capacity:</label>
                             <input class="form-control col-8 w-50" name="event-capacity" id="event-capacity" type="number" value="0"/>
                         </div>
@@ -64,6 +64,10 @@ export default class extends AbstractView {
                                 <option value="Fair">Fair</option>
                                 <option value="Festival">Festival</option>
                             </select>
+                        </div>
+                        <div>
+                            <label class="form-label col-3" for="event-image>Upload Image:</label>
+                            <input type="file" name="image" id="image"/>
                         </div>
 
 

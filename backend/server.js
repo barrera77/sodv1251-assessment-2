@@ -15,6 +15,36 @@ import nodemailer from "nodemailer";
 import { fileURLToPath } from "url";
 import scheduleRouter from "./routes/schedule-router.js";
 
+import multer from "multer";
+
+// Set up multer storage configuration
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/");
+  },
+
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  },
+});
+
+// The file filter function checks that only image files are allowed to be uploaded, and the limits specify a maximum file size of 5 MB.
+const upload = multer({
+  storage: storage,
+  fileFilter: function (req, file, cb) {
+    if (!file.mimetype.startsWith("image/")) {
+      return cb(new Error("Only image files are allowed!"));
+    }
+    cb(null, true);
+  },
+  limits: {
+    fileSize: 1024 * 1024 * 5, // 5 MB
+  },
+});
+
+// Serve static files from the "uploads" directory
+app.use("/uploads", express.static(__dirname + "/uploads"));
+
 // Get the current directory
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
