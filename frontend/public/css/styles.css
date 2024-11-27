@@ -359,3 +359,9 @@ h5 {
 .item-details {
   list-style: none;
 }
+
+/* Create Event */
+
+.file-input {
+  width: 70% !important;
+}

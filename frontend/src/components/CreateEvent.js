@@ -69,17 +69,19 @@ export default class extends AbstractView {
                             <label class="form-label col-3" for="event-image>Upload Image:</label>
                             <input type="file" name="image" id="image"/>
                         </div>
-
-
-                        
-                    </div>
-                
+                        <div class="row w-75 m-auto">
+                            <div class="col-3">
+                                <button class="btn btn-outline-success" type="submit">Upload Image</button>
+                            </div>   
+                            <div class="col-9 p-0">
+                                <input type="file" name="eventImage" accept="image/*" class="text-muted form-control file-input" />
+                            </div>
+                                                    
+                        </div>                        
+                    </div>                
                 </form>
-
-
             </div>
-        </div>
-        
+        </div>        
         </div>
      </section>
     

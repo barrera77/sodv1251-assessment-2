@@ -14,8 +14,15 @@ import attandeeRouter from "./routes/attendee-router.js";
 import nodemailer from "nodemailer";
 import { fileURLToPath } from "url";
 import scheduleRouter from "./routes/schedule-router.js";
-
 import multer from "multer";
+
+dotenv.config();
+
+const app = express();
+
+// Get the current directory
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Set up multer storage configuration
 const storage = multer.diskStorage({
@@ -44,14 +51,6 @@ const upload = multer({
 
 // Serve static files from the "uploads" directory
 app.use("/uploads", express.static(__dirname + "/uploads"));
-
-// Get the current directory
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-dotenv.config();
-
-const app = express();
 
 // Connect to MongoDB Atlas
 mongoose
