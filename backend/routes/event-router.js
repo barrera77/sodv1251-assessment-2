@@ -31,7 +31,7 @@ eventRouter.put("/", async (req, res) => {
     const eventId = req.params.id;
     const updatedData = req.body;
     const updatedEvent = await editEvent(eventId, updatedData);
-    res.status(200).jaon(updatedEvent);
+    res.status(200).jason(updatedEvent);
   } catch (error) {
     res.status(500).json({ message: "Error editing event", error });
   }

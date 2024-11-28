@@ -337,10 +337,15 @@ export default class extends AbstractView {
   handleAddEventForm = async (event) => {
     event.preventDefault();
 
+    // Get the `id` from the URL
+    this.urlParams = new URLSearchParams(window.location.search);
+    const id = this.urlParams.get("id");
+
     const formData = new FormData(event.target);
 
     const eventData = Object.fromEntries(formData.entries());
     console.log("event data", eventData);
+    console.log(id);
 
     const isValidForm = this.validateCreateEventForm(eventData);
 
@@ -349,7 +354,7 @@ export default class extends AbstractView {
 
       try {
         const isSuccess = await this.updateCurrentEvent(
-          eventData._id,
+          id,
           eventData.name,
           eventData.description,
           eventData.topicsCovered,
@@ -441,6 +446,7 @@ export default class extends AbstractView {
       category: category,
       organizerId: organizerId,
     };
+    console.log("This is the ID: ", _id);
 
     try {
       const response = await updateData(EVENTS_END_POINT, _id, eventToUpdate);
