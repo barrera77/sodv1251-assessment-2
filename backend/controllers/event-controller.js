@@ -9,3 +9,14 @@ export async function getAllEvents() {
     throw error;
   }
 }
+
+export async function createEvent(eventData) {
+  try {
+    const newEvent = new Event(eventData);
+    await newEvent.save();
+    return newEvent;
+  } catch (error) {
+    console.error("Error creating event:", error);
+    throw error;
+  }
+}

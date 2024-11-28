@@ -1,5 +1,5 @@
 import express from "express";
-import { getAllEvents } from "../controllers/event-controller.js";
+import { getAllEvents, createEvent } from "../controllers/event-controller.js";
 
 const eventRouter = express.Router();
 
@@ -9,6 +9,16 @@ eventRouter.get("/", async (req, res) => {
     res.json(events);
   } catch (error) {
     res.status(500).json({ message: "Error fetching events" });
+  }
+});
+
+eventRouter.post("/", async (req, res) => {
+  try {
+    const eventData = req.body;
+    const newEvent = await createEvent(eventData);
+    res.status(201).json(newEvent);
+  } catch (error) {
+    res.status(500).json({ message: "Error creating event" });
   }
 });
 

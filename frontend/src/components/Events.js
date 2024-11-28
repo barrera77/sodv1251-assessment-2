@@ -40,7 +40,7 @@ export default class extends AbstractView {
       <div class="container bg-white p-3 events-list">
         <div class="border-bottom border-secondary-subttle pb-3 d-flex align-items-center gap-5">
           <h5><i class="bi bi-calendar2-event"></i> Events</h5>
-          <a href="/create-event" class="btn btn-primary"><i class="bi bi-plus-circle-fill"></i> New Event</a>
+          <a href="/create-event" class="btn btn-primary" data-link><i class="bi bi-plus-circle-fill"></i> New Event</a>
         </div>
         <div class="cards-wrapper py-4">
         ${rows}

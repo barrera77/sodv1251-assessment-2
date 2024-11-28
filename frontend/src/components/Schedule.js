@@ -317,7 +317,6 @@ export default class extends AbstractView {
         const eventId = this.settings.select.value;
         const eventDate = this.settings.date.textContent;
         const eventTime = this.settings.time.value;
-        const eventAddress = this.settings.address.textContent;
         const eventObservations = this.settings.observations.textContent;
 
         newSchedule = {
