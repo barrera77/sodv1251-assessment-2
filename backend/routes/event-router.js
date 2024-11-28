@@ -1,5 +1,9 @@
 import express from "express";
-import { getAllEvents, createEvent } from "../controllers/event-controller.js";
+import {
+  getAllEvents,
+  createEvent,
+  editEvent,
+} from "../controllers/event-controller.js";
 
 const eventRouter = express.Router();
 
@@ -19,6 +23,17 @@ eventRouter.post("/", async (req, res) => {
     res.status(201).json(newEvent);
   } catch (error) {
     res.status(500).json({ message: "Error creating event" });
+  }
+});
+
+eventRouter.put("/", async (req, res) => {
+  try {
+    const eventId = req.params.id;
+    const updatedData = req.body;
+    const updatedEvent = await editEvent(eventId, updatedData);
+    res.status(200).jaon(updatedEvent);
+  } catch (error) {
+    res.status(500).json({ message: "Error editing event", error });
   }
 });
 

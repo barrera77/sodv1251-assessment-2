@@ -1,5 +1,5 @@
 import AbstractView from "./AbstractView.js";
-import { getData, saveData } from "../utils/api-utility.js";
+import { getData, updateData } from "../utils/api-utility.js";
 
 const EVENTS_END_POINT = "/api/events";
 const ORGANIZERS_END_POINT = "/api/organizers";
@@ -54,13 +54,13 @@ export default class extends AbstractView {
                   </label>
                   <div class="col-9 p-0">
                     <input
-                      disabled
-                      class="form-control w-75"
+                      readonly 
+                      class="form-control w-75 bg-secondary-subtle"
                       name="name"
                       id="event-name"
                       type="text"
                       value="${this.currentEvent.name}"
-                    ></input>
+                    >
                     <div
                       id="invalid-event-name"
                       class="invalid-feedback text-danger"
@@ -223,16 +223,16 @@ export default class extends AbstractView {
                             (organizer) =>
                               `
                      <input
-                      disabled
+                      readonly 
                       value="${organizer.name}"
-                      class="form-control w-75 mb-3"
+                      class="form-control w-75 mb-3 bg-secondary-subtle"
                       name="currentOrganizer"
                       id="current-event-location"
                       type="text"
                     > `
                           )
                           .join("")
-                      : `<input value="No organizers available" disabled class="form-control w-75">`
+                      : `<input value="No organizers available" readonly  class="form-control w-75">`
                   }
                                    
                   </div>
@@ -258,7 +258,7 @@ export default class extends AbstractView {
                                   `<option value="${organizer._id}">${organizer.name}</option>`
                               )
                               .join("")
-                          : `<option value="none" disabled>No organizers available</option>`
+                          : `<option value="none" readonly >No organizers available</option>`
                       }
                     </select>
                     <div
@@ -348,7 +348,8 @@ export default class extends AbstractView {
       console.log("is the form valid?", isValidForm);
 
       try {
-        const isSuccess = await this.createNewEvent(
+        const isSuccess = await this.updateCurrentEvent(
+          eventData._id,
           eventData.name,
           eventData.description,
           eventData.topicsCovered,
@@ -360,12 +361,12 @@ export default class extends AbstractView {
         );
 
         if (isSuccess) {
-          alert("Event added succesfully.");
+          alert("Event updated succesfully.");
           this.resetForms();
         }
       } catch (error) {
-        console.error("Error creating event:", error);
-        alert("There was an error adding the event.");
+        console.error("Error updating event:", error);
+        alert("There was an error updating the event.");
       }
     }
   };
@@ -419,7 +420,8 @@ export default class extends AbstractView {
   /**
    * Create new Event
    */
-  async createNewEvent(
+  async updateCurrentEvent(
+    _id,
     name,
     description,
     topicsCovered,
@@ -429,7 +431,7 @@ export default class extends AbstractView {
     category,
     organizerId
   ) {
-    let newEvent = {
+    let eventToUpdate = {
       name: name,
       description: description,
       topicsCovered: topicsCovered,
@@ -441,10 +443,10 @@ export default class extends AbstractView {
     };
 
     try {
-      const response = await saveData(EVENTS_END_POINT, newEvent);
-      console.log("Event created successfully:", response);
+      const response = await updateData(EVENTS_END_POINT, _id, eventToUpdate);
+      console.log("Event updated successfully:", response);
     } catch (error) {
-      console.error("Error sending event:", error);
+      console.error("Error updating event:", error);
       throw error;
     }
 

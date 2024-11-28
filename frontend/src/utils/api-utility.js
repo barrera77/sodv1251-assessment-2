@@ -32,3 +32,24 @@ export const saveData = async (endpoint, object) => {
     return data;
   }
 };
+
+export async function updateData(endpoint, id, updatedData) {
+  try {
+    const response = await fetch(`${BASE_URL}${endpoint}/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedData),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to update data: ${response.statusText}`);
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error updating data:", error);
+    throw error;
+  }
+}

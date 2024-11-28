@@ -20,3 +20,18 @@ export async function createEvent(eventData) {
     throw error;
   }
 }
+
+export async function editEvent(eventId, updatedData) {
+  try {
+    const updatedEvent = await Event.findByIdAndUpdate(eventId, updatedData, {
+      new: true,
+    });
+
+    if (!updatedEvent) {
+      throw new Error(`Event with ID ${eventId} not found.`);
+    }
+  } catch (error) {
+    console.error("Error editing event:", error);
+    throw error;
+  }
+}
