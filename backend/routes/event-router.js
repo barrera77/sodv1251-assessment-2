@@ -26,12 +26,14 @@ eventRouter.post("/", async (req, res) => {
   }
 });
 
-eventRouter.put("/", async (req, res) => {
+eventRouter.put("/:id", async (req, res) => {
   try {
     const eventId = req.params.id;
     const updatedData = req.body;
+    console.log(updatedData);
     const updatedEvent = await editEvent(eventId, updatedData);
     res.status(200).json(updatedEvent);
+    console.log(updatedEvent);
   } catch (error) {
     res.status(500).json({ message: "Error editing event", error });
   }

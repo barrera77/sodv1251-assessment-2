@@ -30,6 +30,8 @@ export async function editEvent(eventId, updatedData) {
     if (!updatedEvent) {
       throw new Error(`Event with ID ${eventId} not found.`);
     }
+
+    return updatedEvent;
   } catch (error) {
     console.error("Error editing event:", error);
     throw error;
