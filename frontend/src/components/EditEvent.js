@@ -344,7 +344,6 @@ export default class extends AbstractView {
     const formData = new FormData(event.target);
 
     const eventData = Object.fromEntries(formData.entries());
-    console.log("event data", eventData);
     console.log(id);
 
     const isValidForm = this.validateCreateEventForm(eventData);
@@ -446,11 +445,9 @@ export default class extends AbstractView {
       category: category,
       organizerId: organizerId,
     };
-    console.log("This is the ID: ", _id);
 
     try {
       const response = await updateData(EVENTS_END_POINT, _id, eventToUpdate);
-      console.log("Event updated successfully:", response);
     } catch (error) {
       console.error("Error updating event:", error);
       throw error;
