@@ -35,9 +35,14 @@ export default class extends AbstractView {
       <div class="container p-3 event-details">
         <div class="border-bottom border-secondary-subttle d-block pb-3">
           <h5 class="mb-3">Event Details</h5>
-          <a href="/events" data-link class="btn btn-outline-primary"
-            ><i class="bi bi-arrow-left-circle-fill"></i> Back to Events Listing</a
-          >
+         <div class="d-flex justify-content-between">
+            <a href="/events" data-link class="btn btn-outline-primary"
+              ><i class="bi bi-arrow-left-circle-fill"></i> Back to Events Listing</a
+            >
+            <a href="/edit-event?id=${id}" data-link class="btn btn-info"
+              ><i class="bi bi-pencil-square"></i> Edit Event</a
+            >
+         </div>
         </div>
         <div class="event-details-container py-3"> 
         ${eventDetailsCard(currentEvent, this.eventOrganizers)}         

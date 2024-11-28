@@ -8,26 +8,41 @@ export default class extends AbstractView {
   constructor(params) {
     super(params);
     this.setTitle("Create Event");
-    let organizersList = [];
+    this.organizersList = [];
+    this.eventOrganizers = [];
+    this.currentEvent = "";
   }
 
   async getHtml() {
+    this.eventsList = await getData(EVENTS_END_POINT);
     this.organizersList = await getData(ORGANIZERS_END_POINT);
+
+    // Get the `id` from the URL
+    this.urlParams = new URLSearchParams(window.location.search);
+    const id = this.urlParams.get("id");
+
+    this.currentEvent = this.eventsList.find((event) => event._id === id);
+    this.currentEvent.organizerId.forEach((o_id) => {
+      let currentOrganizer = this.organizersList.find(
+        (organizer) => organizer._id === o_id
+      );
+      this.eventOrganizers.push(currentOrganizer);
+    });
+
     return `
      <section class="py-3">
       <div class="container bg-white p-3">
         <div class="border-bottom border-secondary-subttle pb-3">
           <h5 class="mb-3">
-            <i class="bi bi-calendar-plus-fill"></i> Create Events
+            <i class="bi bi-pencil-square"></i> Edit Event
           </h5>
           <button
             onclick="window.history.back()"
             data-link
             class="btn btn-outline-primary btn-back"
           >
-            <i class="bi bi-arrow-left-circle-fill"></i> Back to Events
+            <i class="bi bi-x-circle-fill"></i> Cancel
           </button>
-          
         </div>
         <div>
           <div>
@@ -39,10 +54,12 @@ export default class extends AbstractView {
                   </label>
                   <div class="col-9 p-0">
                     <input
+                      disabled
                       class="form-control w-75"
                       name="name"
                       id="event-name"
                       type="text"
+                      value="${this.currentEvent.name}"
                     ></input>
                     <div
                       id="invalid-event-name"
@@ -64,7 +81,7 @@ export default class extends AbstractView {
                       id="event-description"
                       type="text"
                       rows="4"
-                    ></textarea>
+                    >${this.currentEvent.description}</textarea>
                     <div
                       id="invalid-event-description"
                       class="invalid-feedback text-danger"
@@ -80,12 +97,13 @@ export default class extends AbstractView {
                   </label>
                   <div class="col-9 ps-0">
                     <input
+                    value="${this.currentEvent.topicsCovered}"
                       class="form-control w-75"
                       name="topicsCovered"
                       id="event-topics"
                       type="text"
                       placeholder="e.g. ReactJS, Bootstrap, NodeJS"
-                    ></input>
+                    >
                     <div
                       id="invalid-event-topics"
                       class="invalid-feedback text-danger"
@@ -101,11 +119,12 @@ export default class extends AbstractView {
                   </label>
                   <div class="col-9 ps-0">
                     <input
+                      value="${this.currentEvent.location}"
                       class="form-control w-75"
                       name="location"
                       id="event-location"
                       type="text"
-                    ></input>
+                    >
                     <div
                       id="invalid-event-location"
                       class="invalid-feedback text-danger"
@@ -148,6 +167,7 @@ export default class extends AbstractView {
                   </label>
                   <div class="col-9 ps-0">
                     <input
+                      value="${this.currentEvent.maxCapacity}"
                       class="form-control w-75"
                       name="maxCapacity"
                       id="event-capacity"
@@ -190,10 +210,36 @@ export default class extends AbstractView {
                       <span id="message">Invalid event category</span>
                     </div>
                   </div>
-                </div>                
+                </div> 
+                 <div class="row pb-4">
+                  <label class="form-label col-3" for="current-event-location"">
+                    Current Organizer(s):
+                  </label>
+                  <div class="col-9 ps-0">
+                  ${
+                    this.eventOrganizers.length > 0
+                      ? this.eventOrganizers
+                          .map(
+                            (organizer) =>
+                              `
+                     <input
+                      disabled
+                      value="${organizer.name}"
+                      class="form-control w-75 mb-3"
+                      name="currentOrganizer"
+                      id="current-event-location"
+                      type="text"
+                    > `
+                          )
+                          .join("")
+                      : `<input value="No organizers available" disabled class="form-control w-75">`
+                  }
+                                   
+                  </div>
+                </div>               
                 <div class="row pb-4">
                   <label class="form-label col-3" for="event-organizer">
-                    Organizer:
+                    Add Organizer:
                   </label>
                   <div class="col-9 ps-0">
                     <select
@@ -223,10 +269,25 @@ export default class extends AbstractView {
                       <span id="message">Invalid event organizer</span>
                     </div>
                   </div>
-                </div>               
+                </div>
+                <div class="row w-75 m-auto py-3">
+                  <div class="col-3">
+                    <button class="btn btn-outline-info" type="submit">
+                      Upload Image
+                    </button>
+                  </div>
+                  <div class="col-9 p-0">
+                    <input
+                      type="file"
+                      name="eventImage"
+                      accept="image/*"
+                      class="text-muted form-control file-input"
+                    />
+                  </div>
+                </div>
                 <div class="w-50 m-auto py-3 text-center">
                   <button class="btn btn-success">
-                    <i class="bi bi-floppy"></i> Save Event
+                    <i class="bi bi-floppy"></i> Save Changes
                   </button>
                 </div>
               </div>
@@ -248,7 +309,7 @@ export default class extends AbstractView {
       eventForm.addEventListener("submit", this.handleAddEventForm);
     }
 
-    //remove all error messages from the elements on input
+    this.setSelectElementsInitialValue(this.currentEvent);
   }
 
   initializeElements() {
@@ -258,7 +319,15 @@ export default class extends AbstractView {
       addEventFormInputs: document.querySelectorAll(".event-form input"),
       eventFormSelect: document.querySelectorAll(".event-form select"),
       eventDescription: document.getElementById("event-description"),
+      selectEventCategory: document.getElementById("event-category"),
+      selectEventDelivery: document.getElementById("event-delivery"),
     };
+  }
+
+  setSelectElementsInitialValue(event) {
+    const { selectEventCategory, selectEventDelivery } = this.domElements;
+    selectEventDelivery.value = event.delivery;
+    selectEventCategory.value = event.category;
   }
 
   /**

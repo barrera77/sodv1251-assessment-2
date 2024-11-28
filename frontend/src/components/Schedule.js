@@ -330,7 +330,12 @@ export default class extends AbstractView {
         this.swap(this.settings.form, this.settings.calendar);
       },
 
-      async saveScheduleData(newSchedule, endpoint) {
+      /**
+       * Save the new scheduled event
+       * @param {*} newSchedule
+       * @param {*} endpoint
+       */
+      async saveScheduleData(endpoint, newSchedule) {
         try {
           await saveData(endpoint, newSchedule);
         } catch (error) {
