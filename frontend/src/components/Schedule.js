@@ -10,7 +10,7 @@ export default class extends AbstractView {
     super(params);
     this.setTitle("Schedule");
     this.daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-    this.currentDate = new Date();
+    this.currentDate = new Date(Date.now());
     this.month = this.currentDate.getMonth();
     this.year = this.currentDate.getFullYear();
   }
@@ -22,6 +22,7 @@ export default class extends AbstractView {
     const formattedDate = this.currentDate.toLocaleDateString("en-US", {
       year: "numeric",
       month: "long",
+      timeZone: "UTC",
     });
     const dayOfTheWeek = this.currentDate.toLocaleDateString("en-US", {
       weekday: "long",
@@ -55,11 +56,16 @@ export default class extends AbstractView {
     //get the upcoming events
     const rows = this.scheduleList
       .map((schedule) => {
+        const today = new Date(Date.now()); //get current date
+        const eventDate = new Date(schedule.startDate);
+
         const matchingEvent = this.eventsList.find(
-          (event) => event._id === schedule.eventId
+          (event) => event._id === schedule.eventId && eventDate > today
         );
 
-        return eventScheduleCard(schedule, matchingEvent);
+        return matchingEvent
+          ? eventScheduleCard(schedule, matchingEvent)
+          : null;
       })
       .join("");
 
@@ -102,9 +108,9 @@ export default class extends AbstractView {
                           <button class="btn-weekday" data-date="${this.year}-${
                               this.month + 1
                             }-${day}">${day || ""}</button>
-                            <span data-date="${this.year}-${this.month + 1}-${
-                              day + 1
-                            }" class="event" style="display: none;"></span>
+                            <span data-date="${this.year}-${
+                              this.month + 1
+                            }-${day}" class="event" style="display: none;"></span>
                           
                         </li>
                         `

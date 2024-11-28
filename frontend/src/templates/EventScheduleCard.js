@@ -5,11 +5,10 @@ const eventScheduleCard = (schedule, event) => {
     year: "numeric",
     month: "numeric",
     day: "2-digit",
+    timeZone: "UTC",
   });
 
-  return ` 
-  
-     
+  return `     
           <div class="w-100 mt-3">
             <div class="card event-schedule-card">
               <div class="card-image-container">
@@ -37,7 +36,6 @@ const eventScheduleCard = (schedule, event) => {
               </div>
             </div>
           </div>
-     
 `;
 };
 
