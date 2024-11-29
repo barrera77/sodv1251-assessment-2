@@ -23,18 +23,15 @@ const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Set up multer storage configuration
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "uploads/");
   },
-
   filename: function (req, file, cb) {
-    cb(null, file.originalname);
+    cb(null, Date.now() + "-" + file.originalname);
   },
 });
 
-// The file filter function checks that only image files are allowed to be uploaded, and the limits specify a maximum file size of 5 MB.
 const upload = multer({
   storage: storage,
   fileFilter: function (req, file, cb) {
@@ -43,14 +40,26 @@ const upload = multer({
     }
     cb(null, true);
   },
-  limits: {
-    fileSize: 1024 * 1024 * 5, // 5 MB
-  },
+  limits: { fileSize: 1024 * 1024 * 5 }, // 5 MB
 });
 
-// Serve static files from the "uploads" directory
-app.use("/uploads", express.static(__dirname + "/uploads"));
+app.post("/api/upload", upload.single("eventImage"), (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ message: "No file uploaded." });
+  }
 
+  try {
+    res.status(200).json({
+      message: "File uploaded successfully!",
+      filePath: `/uploads/${req.file.filename}`,
+    });
+  } catch (error) {
+    console.error("Error processing upload:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+app.use("/uploads", express.static(__dirname + "/uploads"));
 // Connect to MongoDB Atlas
 mongoose
   .connect(process.env.MONGODB_URI)

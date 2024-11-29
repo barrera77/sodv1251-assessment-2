@@ -272,17 +272,25 @@ export default class extends AbstractView {
                 </div>
                 <div class="row w-75 m-auto py-3">
                   <div class="col-3">
-                    <button class="btn btn-outline-info" type="submit">
+                    <button class="btn btn-outline-info btn-upload" type="button">
                       Upload Image
                     </button>
                   </div>
                   <div class="col-9 p-0">
                     <input
                       type="file"
+                      id="file"
                       name="eventImage"
                       accept="image/*"
                       class="text-muted form-control file-input"
-                    />
+                    >
+                     <div
+                      id="invalid-file"
+                      class="invalid-feedback text-danger"
+                    >
+                      <i class="bi bi-exclamation-triangle"></i>
+                      <span id="message">Invalid file</span>
+                    </div>
                   </div>
                 </div>
                 <div class="w-50 m-auto py-3 text-center">
@@ -310,6 +318,8 @@ export default class extends AbstractView {
     }
 
     this.setSelectElementsInitialValue(this.currentEvent);
+
+    this.uploadPictures();
   }
 
   initializeElements() {
@@ -321,6 +331,8 @@ export default class extends AbstractView {
       eventDescription: document.getElementById("event-description"),
       selectEventCategory: document.getElementById("event-category"),
       selectEventDelivery: document.getElementById("event-delivery"),
+      uploadButton: document.querySelector(".btn-upload"),
+      fileInput: document.querySelector(".file-input"),
     };
   }
 
@@ -512,6 +524,52 @@ export default class extends AbstractView {
           messageElement.classList.remove("d-block");
         }
       });
+    });
+  }
+  uploadPictures() {
+    const { uploadButton, fileInput } = this.domElements;
+
+    if (!uploadButton || !fileInput) {
+      console.error("DOM elements not found!");
+      return;
+    }
+
+    uploadButton.addEventListener("click", async (event) => {
+      event.preventDefault();
+      const file = fileInput.files[0];
+
+      if (!file) {
+        alert("Please select a file to upload");
+        console.error("No file selected");
+        return;
+      }
+
+      console.log("Selected file:", file);
+
+      const formData = new FormData();
+      formData.append("eventImage", file);
+
+      try {
+        const response = await fetch("/api/upload", {
+          method: "POST",
+          body: formData,
+        });
+
+        console.log("Response:", response);
+
+        if (response.ok) {
+          const result = await response.json();
+          alert(`Image uploaded successfully! File URL: ${result.filePath}`);
+          console.log(`Uploaded File URL: ${result.filePath}`);
+        } else {
+          const error = await response.json();
+          alert(`Upload failed: ${error.message}`);
+          console.error("Error response:", error);
+        }
+      } catch (error) {
+        console.error("Error during file upload:", error);
+        alert("An error occurred while uploading the file.");
+      }
     });
   }
 }
