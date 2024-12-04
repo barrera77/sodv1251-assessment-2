@@ -10,6 +10,7 @@ services:
       - MONGODB_URI=mongodb+srv://alvamanuel77:barrera77@cluster0.mpw01xy.mongodb.net/event-management?retryWrites=true&w=majority&appName=Cluster0
       - SENDER_USERNAME=myprojects.manuel@gmail.com
       - SENDER_PASSWORD=rglj guud nknq tfab
+      - PORT=1000
     volumes:
       - .:/app
       - /app/node_modules

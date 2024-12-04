@@ -15,9 +15,12 @@ import nodemailer from "nodemailer";
 import { fileURLToPath } from "url";
 import scheduleRouter from "./routes/schedule-router.js";
 import multer from "multer";
+import cors from "cors";
 
 dotenv.config();
 const app = express();
+
+app.use(cors());
 
 // Get the current directory
 const __filename = fileURLToPath(import.meta.url);
