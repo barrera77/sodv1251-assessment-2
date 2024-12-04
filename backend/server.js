@@ -78,7 +78,8 @@ app.use("/api/eventsSchedule", scheduleRouter);
 
 // Serve static assets in production mode
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(process.cwd(), "frontend", "public")));
+  //app.use(express.static(path.join(process.cwd(), "frontend", "public")));
+  app.use(express.static(path.join(process.cwd(), "frontend", "dist")));
   app.use("/src", express.static(path.join(process.cwd(), "frontend", "src")));
   app.use(
     "/components",

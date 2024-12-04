@@ -1,0 +1,70 @@
+- .env
+- .gitignore
+- backend
+  - controllers
+    - attendee-controller.js
+    - event-controller.js
+    - organizer-controller.js
+    - schedule-controller.js
+  - data
+    - attendees-script.js
+    - events-script.js
+    - organizers-script.js
+  - middleware
+  - models
+    - Atendee.js
+    - Event.js
+    - EventCategory.js
+    - Organizer.js
+    - Registration.js
+    - Schedule.js
+    - user.js
+  - routes
+    - attendee-router.js
+    - event-router.js
+    - organizer-router.js
+    - schedule-router.js
+  - sendMail.js
+  - server.js
+- frontend
+  - public
+    - css
+      - calendar-styles.css
+      - modern-reset.css
+      - styles.css
+    - index.html
+  - src
+    - assets
+      - umbrella-logo-1.png
+      - umbrella-logo-2.png
+      - umbrella-logo-3.png
+      - umbrella-logo.png
+    - components
+      - AbstractView.js
+      - AttendeeDetails.js
+      - Attendees.js
+      - Communication.js
+      - CreateEvent.js
+      - Dashboard.js
+      - EditEvent.js
+      - EventAttendees.js
+      - EventDetails.js
+      - Events.js
+      - Home.js
+      - Schedule.js
+      - ScheduleCalendar.js
+    - index.js
+    - services
+    - templates
+      - AttendeeCard.js
+      - EventCard.js
+      - EventDetailsCard.js
+      - EventPhotoGallery.js
+      - EventScheduleCard.js
+      - MailingForm.js
+    - utils
+      - api-utility.js
+- package-lock.json
+- package.json
+- readme.md
+- webpack.config.js

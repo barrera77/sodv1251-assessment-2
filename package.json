@@ -3,17 +3,18 @@
   "version": "1.0.0",
   "type": "module",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "Start": "node backend/server.js",
+    "build": "parcel build frontend/public/index.html --dist-dir frontend/dist",
     "dev": "nodemon backend/server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^3.1.7"
+    "nodemon": "^3.1.7",
+    "parcel": "^2.13.2"
   },
   "dependencies": {
     "dotenv": "^16.4.5",
