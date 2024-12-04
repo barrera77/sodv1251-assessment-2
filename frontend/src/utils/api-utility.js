@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:1000";
+const BASE_URL = "https://sodv1251-assessment-2-latest.onrender.com";
 
 //GET request
 export async function getData(endpoint) {
