@@ -220,6 +220,13 @@ h5 {
   height: 370px;
 }
 
+.logo {
+  text-align: center;
+  font-size: 35px;
+  font-weight: bolder;
+  color: var(--white);
+}
+
 @media (max-width: 767.98px) {
   .sidebar {
     top: 5rem;

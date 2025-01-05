@@ -1,218 +1,43 @@
-# Event Portal - README
-
-This document outlines the setup, functionality, and compliance of the Event Portal project, a server-side event management system built with Node.js, Express, and MongoDB Atlas. This application allows users to create, read, update, and delete events, manage attendees, and send email notifications, among other features.
-
-Please watch video-demo for functionality
-
-## Table of Contents
-
-1. [Project Overview](#project-overview)
-2. [Requirements Compliance](#requirements-compliance)
-3. [Setup Instructions](#setup-instructions)
-4. [Code Snippets](#code-snippets)
+# sodv1251-assessment-2
 
 ## Project Overview
 
-The Event Portal is designed to assist a local community center in managing events such as workshops, seminars, and social gatherings. The primary functionalities include:
+Imagine that your city's local community center has asked you to develop a server-side event management system to help them organize various events such as workshops, seminars, and social gatherings. The community center needs an easy-to-use application to create, manage, and update events, notify attendees, upload and manage event images, and maintain an event calendar. 
+Create a server-side event management system using Node.js. The application should provide users the ability to create, read, update, and delete events, upload files such as event images, and send email notifications to attendees.  
 
-- Event creation, updating, deletion, and viewing.
-- Attendee management.
-- Email notifications to attendees using Gmail.
-- File uploads for event images.
-- A calendar view for scheduled events.
 
-## Requirements Compliance
+# The Improvements
 
-The application satisfies the following requirements:
-Key functionalities:
+1. Create a single page application simulating a event management system staying within technology requirments
+2. Add interactive calendar view to scheduled events.
+3. Add a database (MongoDB) instead of using files for data management
+4. Deploy with Docker
 
-- CRUD Operations: Create, read, update, and delete event records.
-- File Uploads: Manage event-related image uploads.
-- Email Notifications: Notify attendees using Gmail via nodemailer.
-- Database Management: Data stored and managed using MongoDB Atlas.
-- Server Setup: Built on Node.js with Express for routing and API development.
+### Technologies used
+- Node.js
+- Bootstrap
+- JS
+- Express
+- MMongoDB
+- jQuery
+- Nodemailer
+- Multer
+- Docker
 
-### 1. **Node.js and Express Setup**
+## What I learned:
+- Full stack development: Building a full-stack application from scratch using JavaScript and Node.js, without relying on frameworks, allowed me to gain a deep understanding of how the front-end and back-end components interact and function together.
 
-The project is built using Node.js and Express, allowing for a robust server-side application. Express routes handle various API calls for event magement.
+- Front-end design and layout: I learned how to create visually appealing user interfaces using HTML, CSS and Bootstrap
 
-**File: `server.js`**
+- Manage file uploads for web applications
 
-```javascript
-import express from "express";
-import eventRouter from "./routes/event-router.js";
-import organizerRouter from "./routes/organizer-router.js";
-import attandeeRouter from "./routes/attendee-router.js";
-import mongoose from "mongoose";
-import dotenv from "dotenv";
+- State Management: I gained experience in managing application state by implementing an abstract class as a template, which provided a structured and reusable approach to handling state across different components.
 
-dotenv.config();
-const app = express();
-app.use(express.json());
-app.use("/api/events", eventRouter);
-app.use("/api/organizers", organizerRouter);
-app.use("/api/attendees", attandeeRouter);
-```
+- RESTful API design: I learned how to design and implement a RESTful API using Express, defining clear routes and endpoints to facilitate communication between the client and server.
 
-### 2. **Database Integration with MongoDB Atlas**
+- Deployment: I learned how to utilize Docker for application deployment, creating containerized environments to ensure consistency across different systems. This method simplified the deployment process and provided me with a great tool to improve the application’s flexibility and reliability.
 
-The application uses MongoDB Atlas, which is a NoSQL database. The data models are created using Mongoose to define schemas for events, attendees, and organizers.
-
-**File: `models/Event.js`**
-
-```javascript
-// File source: server.js
-// Connect to MongoDB Atlas
-mongoose
-  .connect(process.env.MONGODB_URI)
-  .then(() => console.log("Connected Successfully to MongoDB Atlas"))
-  .catch((error) => console.error("MongoDB connection error:", error));
-```
-
-### 3. **CRUD Operations**
-
-The application implements CRUD operations for managing events. This is achieved using Express routes that interact with the MongoDB database.
-
-**File: `routes/event-router.js`**
-
-```javascript
-// File source: event-router.js
-import express from "express";
-import {
-  getAllEvents,
-  createEvent,
-  editEvent,
-} from "../controllers/event-controller.js";
-
-const eventRouter = express.Router();
-
-eventRouter.get("/", async (req, res) => {
-  try {
-    const events = await getAllEvents();
-    res.json(events);
-  } catch (error) {
-    res.status(500).json({ message: "Error fetching events" });
-  }
-});
-
-eventRouter.post("/", async (req, res) => {
-  try {
-    const eventData = req.body;
-    const newEvent = await createEvent(eventData);
-    res.status(201).json(newEvent);
-  } catch (error) {
-    res.status(500).json({ message: "Error creating event" });
-  }
-});
-```
-
-### 4. **File Uploads**
-
-The application supports file uploads for event images using Multer, allowing users to upload images related to events.
-
-**File: `server.js`**
-
-```javascript
-import multer from "multer";
-
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "uploads/");
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname);
-  },
-});
-
-const upload = multer({ storage: storage });
-```
-
-### 5. **Email Functionality**
-
-Email notifications are sent to attendees using Nodemailer and Gmail SMTP. The application allows users to send emails directly from the platform.
-
-**File: `server.js`**
-
-```javascript
-import nodemailer from "nodemailer";
-
-app.post("/send-email", async (req, res) => {
-  const { to, subject } = req.body;
-  const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
-    auth: {
-      user: process.env.SENDER_USERNAME,
-      pass: process.env.SENDER_PASSWORD,
-    },
-  });
-
-  const mailOptions = {
-    from: process.env.SENDER_USERNAME,
-    to: to,
-    subject: subject,
-    text: "Event Confirmation.",
-  };
-
-  try {
-    await transporter.sendMail(mailOptions);
-    res.send("Email sent successfully!");
-  } catch (error) {
-    res.status(500).send("Failed to send email");
-  }
-});
-```
-
-### 6. **Security Measures**
-
-Security measures such as environment variables for sensitive data (like Gmail credentials) are implemented using dotenv.
-
-**File: `.env`**
-
-```plaintext
-SENDER_USERNAME=your_email@gmail.com
-SENDER_PASSWORD=your_password
-MONGODB_URI=your_mongo_connection_string
-```
-
-## Setup Instructions
-
-To set up the Event Portal project, follow these steps:
-
-1. **Clone the Repository**
-
-   ```bash
-   git clone https://github.com/your-username/event-portal.git
-   cd event-portal
-   ```
-
-2. **Install Dependencies**
-   Install the required packages using npm.
-
-   ```bash
-   npm install
-   ```
-
-3. **Set Up Environment Variables**
-   Create a `.env` file in the root directory and add your environment variables:
-
-   ```plaintext
-   SENDER_USERNAME=your_email@gmail.com
-   SENDER_PASSWORD=your_password
-   MONGODB_URI=your_mongo_connection_string
-   ```
-
-4. **Run the Server**
-   Use Nodemon to start the server for development.
-
-   ```bash
-   npm run dev
-   ```
-
-5. **Access the Application**
-   Open your browser and navigate to `http://localhost:5000` or click the link displayed in the console to access the Event Portal.
 
 ## Conclusion
+This activity has provided me with valuable skills from front-end design to back-end implementation, state management, and deployment, I have gained a well-rounded skill set that has prepared me for dealing with future challenges in full-stack development..
 
-The Event Portal project successfully implements an event management system that meets the specified requirements. The use of Node.js, Express, MongoDB Atlas, and Nodemailer provides a robust and scalable solution for managing community events effectively. The code snippets included illustrate how the application complies with the project requirements, demonstrating a clear and functional implementation.
